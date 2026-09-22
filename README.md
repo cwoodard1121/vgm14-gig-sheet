@@ -9,25 +9,39 @@ That matters because venues rarely have any.
 Four tabs along the bottom:
 
 - **Setlist**: the big **Start gig** button (it becomes **Resume gig** if you
-  closed gig mode partway through), then every song. Tap a song to open its dial sheet:
-  - all ten faders drawn in board order, each at its **actual position**
-    (`U`, `+4`, `−6`), with your tape mark beside each one. Faders that aren't
-    on the tape are highlighted orange.
-  - the EFX (vocal reverb) knob at its clock position.
+  closed gig mode partway through), then every song. Tap a song to open it:
+  - the whole board drawn with this song's positions. Controls that differ from
+    the tape are ringed in orange. Tap it for full screen.
+  - all ten faders in board order at their **actual position** on the printed
+    scale (`0`, `+4`, `−6`), with your tape mark beside each one.
+  - the per-song reverb, which is the **EFX Return to MAIN** fader: Dry −12,
+    Normal −6, Wet −3 (preset 6, Plate Reverb – Vocals).
   - to change a fader, tap it, then use the big − / + buttons (1 dB per tap).
-  - the song's template, soloist, cues and notes.
+    The board redraws as you go.
+  - the song's template, soloist, cues and notes, and **Reset this song** (tap twice).
   - **‹ ›** (or a swipe) moves to the next or previous song, and **Play from here** starts gig mode at this song.
 
   **Manage** has the default soloist, song order and delete, templates, adding
-  songs, and backup / restore.
-- **Checklist**: the load-in list, grouped, with a progress bar. Tap anywhere on a row to tick it.
-- **Board**: the starting settings for every channel as cards, the master section, and the console drawing.
-- **Reference**: troubleshooting, quick notes, EQ, routing, stage plot, cables and the rest. Each section folds open.
+  songs, backup / restore, and **Reset app** (tap twice). Reset app wipes
+  everything the app saved on the phone and reloads with the starter setlist.
+  The offline copy stays.
+- **Checklist**: the outdoor load-in, in phases along a progress rail. The next
+  step is shown large. Finished phases fold up and can be reopened.
+- **Board**: a drawing of the whole VGM14 top panel at the tape positions, in the
+  numbers printed on the real panel, with the master-section notes and channel notes.
+- **Reference**: troubleshooting, quick notes, EQ, routing, stage plot, cables and the rest,
+  written for an outdoor show. Each section folds open.
 
-**Gig mode** is always dark and keeps the screen awake. It shows one song at a time:
-the title, **Move these** (only the faders that change from the previous song,
-with where they go), a compact view of all the faders, the cues and what's next.
-Tap **Next**, swipe, or use the arrow keys. It remembers where you were.
+**Full screen board**: tap any board, or turn the phone sideways on Board, a song
+or gig mode. It has Fit / 2× / 3× zoom, and double-tap zooms too. Close it with ×,
+Esc or the back button. Turning the phone upright again closes it.
+
+**Gig mode** keeps the screen awake and has its own **Day / Night** switch
+(Day is high-contrast for sun). It shows one song at a time: the title,
+**Move these** (only the faders that change from the previous song, with where
+they go), all 16 faders, the cues and what's next. Tap **Next**, swipe, or use
+the arrow keys. Press and hold the title (or tap the list button) to jump to any
+song. It remembers where you were.
 
 Everything is saved on the phone (`localStorage`). Use **Manage → Backup & restore**
 to copy or download the setlist, or to move it to another phone.
@@ -51,7 +65,7 @@ Open it once while you have signal. After that it loads in airplane mode.
 ## To update
 
 1. Edit the files.
-2. Bump `VERSION` in `sw.js` (e.g. `v3` → `v4`).
+2. Bump `VERSION` in `sw.js` (e.g. `v4` → `v5`).
 3. Push.
 
 The next time the app is opened with signal, it shows **Update available: tap to reload**.
@@ -62,6 +76,6 @@ The next time the app is opened with signal, it shows **Update available: tap to
 |---|---|
 | `index.html` | The whole app. Self-contained apart from the Google Fonts link. |
 | `sw.js` | Service worker: offline cache and the update prompt. |
-| `manifest.webmanifest` | Name, icons, colours, standalone portrait display. |
+| `manifest.webmanifest` | Name, icons, colours, standalone display in any orientation. |
 | `icon-*.png` | App icons, including a maskable one for Android. |
 | `.nojekyll` | Tells GitHub Pages to serve the files as they are. |
