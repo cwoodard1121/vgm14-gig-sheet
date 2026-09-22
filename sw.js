@@ -1,7 +1,7 @@
 /* VGM14 Gig Sheet — offline cache.
    Venues have bad signal; the whole app must work with no network.
    To ship an update: edit, bump VERSION, push. Phones show "Update available". */
-const VERSION = "v4";
+const VERSION = "v5";
 const CACHE = "gigsheet-" + VERSION;
 const CORE = [
   "./",
