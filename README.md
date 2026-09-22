@@ -1,51 +1,67 @@
-# VGM14 Gig Sheet — offline app
+# VGM14 Gig Sheet: offline app
 
-A self-contained, installable web app. Once it's on a URL and you've opened it
-once, it works with no signal — which is the point, because venues don't have any.
-Checkbox state is saved in the browser on your phone.
+A phone app for mixing a four-piece from stage on a Yorkville VGM14. It installs
+to your home screen and, once you've opened it one time, works with no signal.
+That matters because venues rarely have any.
 
-## Fastest way up (about 60 seconds, no account needed to test)
+## What's in it
 
-1. Go to **https://app.netlify.com/drop**
-2. Drag this whole folder onto the page.
-3. You get a URL immediately. Open it on your phone.
+Four tabs along the bottom:
 
-Make a free account if you want to keep the URL permanently.
+- **Setlist**: the big **Start gig** button (it becomes **Resume gig** if you
+  closed gig mode partway through), then every song. Tap a song to open its dial sheet:
+  - all ten faders drawn in board order, each at its **actual position**
+    (`U`, `+4`, `−6`), with your tape mark beside each one. Faders that aren't
+    on the tape are highlighted orange.
+  - the EFX (vocal reverb) knob at its clock position.
+  - to change a fader, tap it, then use the big − / + buttons (1 dB per tap).
+  - the song's template, soloist, cues and notes.
+  - **‹ ›** (or a swipe) moves to the next or previous song, and **Play from here** starts gig mode at this song.
 
-## GitHub Pages
+  **Manage** has the default soloist, song order and delete, templates, adding
+  songs, and backup / restore.
+- **Checklist**: the load-in list, grouped, with a progress bar. Tap anywhere on a row to tick it.
+- **Board**: the starting settings for every channel as cards, the master section, and the console drawing.
+- **Reference**: troubleshooting, quick notes, EQ, routing, stage plot, cables and the rest. Each section folds open.
 
-1. Create a new **public** repo (e.g. `vgm14-gig-sheet`) at https://github.com/new
-2. On the repo page click **Add file → Upload files**, drag in everything from
-   this folder, commit.
-3. **Settings → Pages → Source: Deploy from a branch → main / (root) → Save**
-4. A minute later it's live at
-   `https://<your-username>.github.io/vgm14-gig-sheet/`
+**Gig mode** is always dark and keeps the screen awake. It shows one song at a time:
+the title, **Move these** (only the faders that change from the previous song,
+with where they go), a compact view of all the faders, the cues and what's next.
+Tap **Next**, swipe, or use the arrow keys. It remembers where you were.
 
-Pages needs the repo to be public unless you have GitHub Pro.
+Everything is saved on the phone (`localStorage`). Use **Manage → Backup & restore**
+to copy or download the setlist, or to move it to another phone.
+
+## Putting it on GitHub Pages
+
+1. Create a **public** repo (e.g. `vgm14-gig-sheet`) and upload everything in this
+   folder, including `.nojekyll`.
+2. **Settings → Pages → Source: Deploy from a branch → main / (root) → Save**
+3. A minute later it's live at `https://<your-username>.github.io/vgm14-gig-sheet/`
+
+All paths are relative, so it works under that subfolder.
 
 ## Installing it on your phone
 
-- **iPhone (Safari):** open the URL → Share button → **Add to Home Screen**
-- **Android (Chrome):** open the URL → ⋮ menu → **Install app** / **Add to Home screen**
+- **iPhone (Safari):** open the URL → Share → **Add to Home Screen**
+- **Android (Chrome):** open the URL → ⋮ menu → **Install app** (or **Add to Home screen**)
 
-It then opens fullscreen with no browser chrome, and the service worker keeps a
-copy of everything, so it loads with the phone in airplane mode.
+Open it once while you have signal. After that it loads in airplane mode.
+
+## To update
+
+1. Edit the files.
+2. Bump `VERSION` in `sw.js` (e.g. `v3` → `v4`).
+3. Push.
+
+The next time the app is opened with signal, it shows **Update available: tap to reload**.
 
 ## Files
 
 | File | What it is |
 |---|---|
-| `index.html` | The whole sheet. Self-contained apart from the Google Fonts link. |
-| `manifest.webmanifest` | Name, icons, colours, standalone display mode. |
-| `sw.js` | Service worker. Caches the shell on install, cache-first after that. |
+| `index.html` | The whole app. Self-contained apart from the Google Fonts link. |
+| `sw.js` | Service worker: offline cache and the update prompt. |
+| `manifest.webmanifest` | Name, icons, colours, standalone portrait display. |
 | `icon-*.png` | App icons, including a maskable one for Android. |
-
-## Notes
-
-- Fonts load from Google Fonts on first visit and are then cached. Offline before
-  that first load, it falls back to the system font — readable, just not as nice.
-- The checkboxes use `localStorage`, so they live on that one phone in that one
-  browser. Clearing site data resets them. There's a **Clear checkboxes** button
-  at the bottom of the load-in section.
-- To update the sheet later, replace `index.html` and bump `VERSION` in `sw.js`
-  (e.g. `v1` → `v2`) so phones pick up the new copy instead of the cached one.
+| `.nojekyll` | Tells GitHub Pages to serve the files as they are. |

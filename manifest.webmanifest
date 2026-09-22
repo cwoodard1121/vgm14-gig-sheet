@@ -1,16 +1,32 @@
 {
+  "id": "./",
   "name": "VGM14 Gig Sheet",
   "short_name": "Gig Sheet",
-  "description": "Routing, channel settings, EQ and load-in checklist for mixing a four-piece from stage on a Yorkville VGM14.",
+  "description": "Setlist dial sheets, gig mode, load-in checklist and board settings for mixing a four-piece from stage on a Yorkville VGM14.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "any",
+  "orientation": "portrait",
   "background_color": "#131519",
   "theme_color": "#131519",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
