@@ -1,0 +1,2376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Routing, channel settings, EQ and load-in checklist for mixing a four-piece from stage on a Yorkville VGM14.">
+<meta name="theme-color" content="#F6F4F0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131519" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Gig Sheet">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>VGM14 Gig Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --bg:#F6F4F0; --panel:#FFFFFF; --panel2:#ECE8E1; --sink:#E3DED5;
+  --rule:#D6D0C4; --rule2:#BFB8A9;
+  --ink:#1B1D21; --ink2:#575C64; --ink3:#8B9098;
+  --accent:#B4670F;
+  --drums:#B4670F; --bass:#9E4740; --gtr:#356B51; --vox:#28598A;
+  --danger:#A83621; --ok:#356B51;
+  --shadow:0 1px 2px rgba(20,18,14,.06),0 4px 14px rgba(20,18,14,.05);
+  --f-disp:'Archivo',system-ui,sans-serif;
+  --f-lab:'Barlow Condensed','Archivo Narrow',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#131519; --panel:#1A1D22; --panel2:#22262D; --sink:#0E1014;
+    --rule:#31373F; --rule2:#434A54;
+    --ink:#E9E6E0; --ink2:#A3A9B3; --ink3:#767D87;
+    --accent:#E9A441;
+    --drums:#E0913C; --bass:#D07A6D; --gtr:#74B18E; --vox:#6DA8DC;
+    --danger:#D96751; --ok:#74B18E;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131519; --panel:#1A1D22; --panel2:#22262D; --sink:#0E1014;
+  --rule:#31373F; --rule2:#434A54;
+  --ink:#E9E6E0; --ink2:#A3A9B3; --ink3:#767D87;
+  --accent:#E9A441;
+  --drums:#E0913C; --bass:#D07A6D; --gtr:#74B18E; --vox:#6DA8DC;
+  --danger:#D96751; --ok:#74B18E;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--f-disp); font-size:16px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1020px; margin:0 auto; padding-inline:20px; padding-block:0 72px}
+
+/* ============ masthead ============ */
+.mast{padding-block:40px 28px; border-bottom:2px solid var(--ink)}
+.eyebrow{
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.14em;
+  font-size:14px; font-weight:600; color:var(--accent); margin:0 0 10px;
+}
+h1{
+  font-size:clamp(34px,7vw,58px); line-height:1; margin:0 0 14px;
+  font-weight:700; letter-spacing:-.028em; text-wrap:balance;
+}
+.dek{font-size:clamp(16px,2.2vw,19px); color:var(--ink2); margin:0; max-width:62ch}
+.mast-meta{
+  display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:22px;
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.09em;
+  font-size:14px; color:var(--ink3); font-weight:500;
+}
+.mast-meta b{color:var(--ink2); font-weight:600}
+
+/* ============ nav ============ */
+nav{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:40;
+  background:var(--bg); border-bottom:1px solid var(--rule);
+  margin-inline:-20px; padding-inline:20px;
+}
+.navscroll{display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; padding-block:9px}
+.navscroll::-webkit-scrollbar{display:none}
+nav a{
+  flex:0 0 auto; text-decoration:none; color:var(--ink2);
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.08em;
+  font-size:14.5px; font-weight:600; padding:5px 11px; border-radius:4px; white-space:nowrap;
+}
+nav a:hover{color:var(--ink); background:var(--panel2)}
+nav a:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+
+/* ============ sections ============ */
+section{padding-block:46px; border-bottom:1px solid var(--rule); scroll-margin-top:78px}
+section:last-of-type{border-bottom:none}
+.shead{margin-bottom:8px}
+.snum{
+  display:block; font-family:var(--f-mono); font-size:12.5px; font-weight:600;
+  color:var(--accent); letter-spacing:.16em; margin-bottom:7px;
+}
+h2{
+  font-size:clamp(24px,4vw,34px); line-height:1.08; margin:0;
+  font-weight:700; letter-spacing:-.02em; text-wrap:balance;
+}
+.sub{color:var(--ink2); margin:0 0 28px 0; max-width:66ch; font-size:16.5px}
+h3{
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.1em;
+  font-size:15.5px; font-weight:700; margin:34px 0 12px; color:var(--ink);
+  padding-bottom:6px; border-bottom:1px solid var(--rule);
+}
+h3:first-child{margin-top:0}
+p{margin:0 0 14px; max-width:68ch}
+strong{font-weight:600}
+a{color:var(--accent)}
+
+/* ============ quick notes ============ */
+.qgrid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
+.qn{
+  background:var(--panel); border:1px solid var(--rule); border-radius:4px;
+  padding:14px 16px; border-left:3px solid var(--rule2); box-shadow:var(--shadow);
+}
+.qn .qt{
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.1em;
+  font-size:13px; font-weight:700; color:var(--ink3); margin:0 0 5px;
+}
+.qn .qv{
+  font-family:var(--f-mono); font-size:15px; font-weight:600; color:var(--ink);
+  margin:0 0 5px; line-height:1.35;
+}
+.qn p{margin:0; font-size:14.4px; color:var(--ink2); max-width:none; line-height:1.5}
+.qn.hot{border-left-color:var(--danger)}
+.qn.hot .qv{color:var(--danger)}
+.qn.go{border-left-color:var(--ok)}
+.qn.key2{border-left-color:var(--accent)}
+.qn.key2 .qv{color:var(--accent)}
+
+/* ============ callouts ============ */
+.key,.warn{
+  background:var(--panel); border:1px solid var(--rule);
+  border-radius:3px; padding:18px 21px; margin:0 0 24px; box-shadow:var(--shadow);
+}
+.key{border-left:4px solid var(--accent)}
+.warn{border-left:4px solid var(--danger)}
+.key p:last-child,.warn p:last-child{margin-bottom:0}
+.kh{
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.12em;
+  font-size:13.5px; font-weight:700; margin:0 0 7px;
+}
+.key .kh{color:var(--accent)}
+.warn .kh{color:var(--danger)}
+
+/* ============ tables ============ */
+.tscroll{overflow-x:auto; margin:0 0 20px; border:1px solid var(--rule); border-radius:4px; background:var(--panel)}
+table{border-collapse:collapse; width:100%; font-size:14.8px; min-width:560px}
+th{
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.09em;
+  font-size:13.5px; font-weight:600; color:var(--ink2); text-align:left;
+  padding:10px 13px; border-bottom:1.5px solid var(--rule2); white-space:nowrap;
+  background:var(--panel2);
+}
+td{padding:10px 13px; border-bottom:1px solid var(--rule); vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n,th.n{font-family:var(--f-mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+.mono{font-family:var(--f-mono); font-size:13.6px; font-variant-numeric:tabular-nums}
+.gchip{
+  display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:7px;
+  vertical-align:middle; flex:0 0 auto;
+}
+.g-drums{background:var(--drums)} .g-bass{background:var(--bass)}
+.g-gtr{background:var(--gtr)} .g-vox{background:var(--vox)}
+.yes{color:var(--danger); font-weight:600}
+.on{color:var(--ok); font-weight:600}
+.off{color:var(--ink3)}
+
+/* ============ figures ============ */
+figure{margin:0 0 22px}
+.figscroll{
+  overflow-x:auto; border:1px solid var(--rule); border-radius:4px;
+  background:var(--panel); box-shadow:var(--shadow);
+}
+figcaption{
+  font-size:14.2px; color:var(--ink3); margin-top:9px; font-family:var(--f-lab);
+  text-transform:uppercase; letter-spacing:.07em; font-weight:500;
+}
+svg{display:block}
+.legend{display:flex; flex-wrap:wrap; gap:6px 18px; margin:0 0 14px}
+.legend span{display:inline-flex; align-items:center; color:var(--ink2);
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.07em;
+  font-weight:500; font-size:14.5px}
+
+.s-face{fill:var(--panel2); stroke:var(--rule2); stroke-width:1}
+.s-ptr{stroke:var(--ink); stroke-width:2.1; stroke-linecap:round; fill:none}
+.s-arc{fill:none; stroke:var(--rule2); stroke-width:1.4; stroke-linecap:round}
+.s-det{stroke:var(--ink3); stroke-width:1; fill:none}
+.s-lab{fill:var(--ink3); font-family:'Barlow Condensed',sans-serif; font-size:10.5px;
+  text-transform:uppercase; letter-spacing:.06em; font-weight:600}
+.s-val{fill:var(--ink); font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:500}
+.s-strip{fill:var(--panel); stroke:var(--rule); stroke-width:1}
+.s-ch{fill:var(--ink); font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:500}
+.s-src{fill:var(--ink); font-family:'Archivo',sans-serif; font-size:11.5px; font-weight:600}
+.s-mic{fill:var(--ink3); font-family:'Barlow Condensed',sans-serif; font-size:11px;
+  text-transform:uppercase; letter-spacing:.05em; font-weight:500}
+.s-track{fill:var(--sink); stroke:var(--rule2); stroke-width:1}
+.s-cap{fill:var(--ink2); stroke:var(--ink); stroke-width:1}
+.s-unity{stroke:var(--ink3); stroke-width:1; stroke-dasharray:2 2}
+.s-wire{stroke:var(--rule2); stroke-width:1.6; fill:none}
+
+/* ============ steps ============ */
+ol.steps{list-style:none; counter-reset:st; padding:0; margin:0}
+ol.steps li{
+  counter-increment:st; position:relative; padding:12px 0 12px 46px;
+  border-bottom:1px solid var(--rule); font-size:15.6px;
+}
+ol.steps li:last-child{border-bottom:none}
+ol.steps li::before{
+  content:counter(st,decimal-leading-zero); position:absolute; left:0; top:13px;
+  font-family:var(--f-mono); font-size:13px; color:var(--ink3); font-weight:500;
+}
+.chk{display:flex; gap:12px; align-items:flex-start}
+.chk input{
+  appearance:none; -webkit-appearance:none; flex:0 0 auto; margin:3px 0 0;
+  width:19px; height:19px; border:1.5px solid var(--rule2); border-radius:3px;
+  background:var(--panel); cursor:pointer; position:relative;
+}
+.chk input:checked{background:var(--accent); border-color:var(--accent)}
+.chk input:checked::after{
+  content:''; position:absolute; left:6px; top:2px; width:5px; height:10px;
+  border:solid var(--bg); border-width:0 2.2px 2.2px 0; transform:rotate(43deg);
+}
+.chk input:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.chk input:checked + span{color:var(--ink3); text-decoration:line-through}
+.chk span{cursor:pointer}
+.reset{
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.09em; font-size:14px;
+  font-weight:600; background:none; border:1px solid var(--rule2); color:var(--ink2);
+  padding:6px 13px; border-radius:3px; cursor:pointer; margin-top:18px;
+}
+.reset:hover{background:var(--panel2); color:var(--ink)}
+
+.cols{display:grid; gap:0 36px; grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+dl{margin:0}
+dt{font-weight:700; font-size:15.8px; margin-top:18px; letter-spacing:-.005em}
+dt:first-of-type{margin-top:0}
+dd{margin:3px 0 0; color:var(--ink2); font-size:15.3px}
+.bigq{
+  font-size:clamp(19px,3vw,24px); line-height:1.34; font-weight:600;
+  letter-spacing:-.016em; max-width:36ch; margin:0 0 20px; text-wrap:balance;
+}
+footer{
+  padding-block:30px 10px; color:var(--ink3); font-size:14px;
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.08em; font-weight:500;
+}
+
+/* ============ setlist ============ */
+[hidden]{display:none !important}
+.btn{
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.08em; font-size:14.5px; font-weight:600;
+  background:var(--panel); color:var(--ink); border:1px solid var(--rule2); border-radius:4px;
+  padding:8px 14px; min-height:40px; cursor:pointer; display:inline-flex; align-items:center; gap:7px;
+}
+.btn:hover{background:var(--panel2)}
+.btn.primary{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.btn.primary:hover{opacity:.88; background:var(--ink)}
+.btn.danger{color:var(--danger); border-color:var(--danger)}
+.btn[disabled]{opacity:.42; cursor:not-allowed}
+.btn[aria-expanded="true"]{background:var(--panel2); border-color:var(--ink2)}
+.btn:focus-visible,.seg button:focus-visible,.step-b:focus-visible,.song-row:focus-visible,
+.tpl-card:focus-visible,.cue button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+.sl-top{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:12px 24px; margin-bottom:16px}
+.sl-stats{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 22px}
+.sl-big{font-family:var(--f-mono); font-size:30px; font-weight:600; letter-spacing:-.02em; line-height:1; font-variant-numeric:tabular-nums}
+.sl-big small{font-family:var(--f-lab); font-size:14px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink3); font-weight:600; margin-left:6px}
+.sl-pills{display:flex; flex-wrap:wrap; gap:6px}
+.pill{
+  display:inline-flex; align-items:center; gap:6px; font-family:var(--f-lab); text-transform:uppercase;
+  letter-spacing:.08em; font-size:12.5px; font-weight:600; padding:2px 9px; border-radius:99px;
+  border:1px solid currentColor; background:transparent; white-space:nowrap;
+}
+.pill i{width:6px; height:6px; border-radius:50%; background:currentColor}
+.st-draft{color:var(--ink3)} .st-rehearsed{color:var(--accent)} .st-locked{color:var(--ok)}
+.sl-store{margin:0; font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.08em; font-size:13.5px; font-weight:600; color:var(--ink3)}
+.sl-store.local{color:var(--accent)}
+
+.sl-controls{
+  display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px;
+  padding-block:12px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+}
+.sl-actions{display:flex; flex-wrap:wrap; gap:8px}
+.lead-wrap{display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px}
+.lead-wrap .flab{margin:0}
+.lead-hint{font-size:13.5px; color:var(--accent); margin:0}
+
+.seg{display:inline-flex; flex-wrap:wrap; border:1px solid var(--rule2); border-radius:4px; overflow:hidden; background:var(--panel)}
+.seg button{
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.07em; font-size:14px; font-weight:600;
+  background:none; border:0; border-left:1px solid var(--rule2); color:var(--ink2); padding:7px 12px; min-height:38px; cursor:pointer;
+}
+.seg button:first-child{border-left:0}
+.seg button:hover{background:var(--panel2)}
+.seg button[aria-pressed="true"]{background:var(--ink); color:var(--bg)}
+.seg button[disabled]{cursor:not-allowed; opacity:.5}
+.flab{
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.1em; font-size:13px; font-weight:700;
+  color:var(--ink3); display:block; margin:0 0 7px;
+}
+.hint{font-size:13.8px; color:var(--ink3); margin:6px 0 0; max-width:62ch}
+
+.panel{background:var(--panel); border:1px solid var(--rule); border-radius:4px; padding:18px; margin:14px 0 4px; box-shadow:var(--shadow)}
+.panel h4{font-size:15.5px; margin:22px 0 8px}
+.panel p{max-width:64ch}
+#setlist textarea,#setlist input[type=text],#setlist select{
+  width:100%; font:inherit; font-size:15px; color:var(--ink); background:var(--bg);
+  border:1px solid var(--rule2); border-radius:4px; padding:9px 11px;
+}
+#setlist select{min-height:40px}
+#setlist textarea{resize:vertical; line-height:1.5}
+#setlist textarea:focus,#setlist input:focus,#setlist select:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent)}
+#setlist textarea[readonly]{font-family:var(--f-mono); font-size:12.5px; color:var(--ink2)}
+.row{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:12px}
+.row select{width:auto !important; min-width:180px}
+.row .flab{margin:0}
+
+.how{display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:26px}
+.how div{border-top:2px solid var(--rule2); padding-top:10px}
+.how b{display:block; font-size:15px; margin-bottom:3px}
+.how p{margin:0; font-size:14.4px; color:var(--ink2)}
+
+/* templates */
+.tpl-grid{display:grid; gap:10px; grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.tpl-card{
+  text-align:left; font:inherit; color:var(--ink); background:var(--panel); border:1px solid var(--rule);
+  border-radius:4px; padding:12px 14px; cursor:pointer; display:flex; flex-direction:column; gap:5px; box-shadow:var(--shadow);
+}
+.tpl-card:hover{border-color:var(--rule2)}
+.tpl-card[aria-expanded="true"]{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent)}
+.tpl-name{font-weight:700; font-size:15.5px; line-height:1.25}
+.tpl-count{font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.08em; font-size:12.5px; font-weight:600; color:var(--ink3)}
+.tpl-card.add{align-items:center; justify-content:center; border-style:dashed; color:var(--ink2); box-shadow:none; background:transparent; min-height:86px;
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.08em; font-weight:600}
+.tpl-ed{margin-top:12px}
+.tpl-ed .ed-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+
+.moves{display:flex; flex-wrap:wrap; gap:4px 5px}
+.mv{
+  font-family:var(--f-mono); font-size:12px; font-weight:500; padding:1px 7px; border-radius:3px;
+  background:var(--panel2); border:1px solid var(--rule); color:var(--ink); white-space:nowrap;
+  display:inline-flex; align-items:center; gap:5px; line-height:1.6;
+}
+.mv .gchip{width:6px; height:6px; margin:0}
+.mv.none{color:var(--ink3); border-style:dashed; background:transparent}
+.mv.fx{color:var(--ink2)}
+
+/* songs */
+.sl-rule{
+  background:var(--panel); border:1px solid var(--rule); border-left:4px solid var(--accent); border-radius:3px;
+  padding:11px 15px; margin:0 0 12px; font-size:15px;
+}
+.songs{list-style:none; margin:0; padding:0; border:1px solid var(--rule); border-radius:4px; background:var(--panel); overflow:hidden}
+.song{border-bottom:1px solid var(--rule)}
+.song:last-child{border-bottom:0}
+.song-empty{padding:22px 16px; color:var(--ink3); font-size:15px}
+.song-row{
+  width:100%; display:grid; grid-template-columns:34px minmax(0,1fr) auto; gap:4px 12px; align-items:start;
+  text-align:left; font:inherit; color:inherit; background:none; border:0; padding:12px 14px; cursor:pointer;
+}
+.song-row:hover,.song.open .song-row{background:var(--panel2)}
+.song-n{font-family:var(--f-mono); font-size:13px; color:var(--ink3); padding-top:3px; font-variant-numeric:tabular-nums}
+.song-main{display:flex; flex-direction:column; gap:2px; min-width:0}
+.song-title{font-weight:700; font-size:16px; line-height:1.3}
+.song-artist{font-size:14px; color:var(--ink2)}
+.song-main .moves{margin-top:6px}
+.song-side{display:flex; flex-direction:column; align-items:flex-end; gap:5px; text-align:right}
+.song-dur{font-family:var(--f-mono); font-size:13px; color:var(--ink2); font-variant-numeric:tabular-nums}
+.tpl-chip{font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.07em; font-size:12.5px; font-weight:600; color:var(--ink2); white-space:nowrap}
+
+/* editor */
+.ed{padding:4px 18px 20px 60px; background:var(--panel2); border-top:1px dashed var(--rule2)}
+.ed-sec{margin-top:18px}
+.ed-grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); margin-top:14px}
+.ed-grid .seg{display:grid; grid-template-columns:repeat(3,1fr); width:100%}
+.ed-grid .seg button{padding-inline:6px}
+.ed-lock{margin:14px 0 0; font-size:14.4px; color:var(--ok); font-weight:500}
+.steppers{display:grid; gap:8px; grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}
+.step{
+  display:grid; grid-template-columns:36px minmax(0,1fr) 36px; align-items:center; gap:6px 4px;
+  background:var(--panel); border:1px solid var(--rule); border-radius:4px; padding:8px;
+}
+.step.set{border-color:var(--ink3)}
+.step-head{grid-column:1 / -1; display:flex; justify-content:space-between; align-items:center; gap:6px}
+.step-lab{font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.07em; font-size:13.5px; font-weight:600; display:flex; align-items:center; white-space:nowrap}
+.step-lab .gchip{margin-right:6px}
+.step-t{font-family:var(--f-mono); font-size:11px; color:var(--ink3); white-space:nowrap}
+.step-b{
+  width:36px; height:36px; border-radius:4px; border:1px solid var(--rule2); background:var(--bg); color:var(--ink);
+  font-size:19px; line-height:1; cursor:pointer; font-family:var(--f-mono); padding:0;
+}
+.step-b:hover{background:var(--panel2)}
+.step-b[disabled]{opacity:.32; cursor:not-allowed}
+.step-v{font-family:var(--f-mono); font-size:16px; font-weight:600; text-align:center; font-variant-numeric:tabular-nums}
+.step-v.up{color:var(--ok)} .step-v.down{color:var(--danger)} .step-v.zero{color:var(--ink3)}
+
+.cues{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px}
+.cue{display:flex; align-items:flex-start; gap:10px; background:var(--panel); border:1px solid var(--rule); border-radius:4px; padding:8px 8px 8px 12px; font-size:15px}
+.cue span{flex:1; padding-top:2px}
+.cue button{border:0; background:none; color:var(--ink3); cursor:pointer; font-size:19px; line-height:1; padding:3px 8px; border-radius:3px; min-height:30px}
+.cue button:hover{color:var(--danger); background:var(--panel2)}
+.cue.tpl{background:transparent; border-style:dashed; color:var(--ink2)}
+.cue.empty{background:transparent; border-style:dashed; color:var(--ink3)}
+.cue-add{display:flex; gap:8px; margin-top:8px}
+.cue-add input{flex:1}
+.ed-foot{display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; margin-top:20px; padding-top:14px; border-top:1px solid var(--rule)}
+.ed-foot > div{display:flex; flex-wrap:wrap; gap:8px}
+
+@media (max-width:560px){
+  .ed{padding:4px 14px 18px}
+  .song-row{grid-template-columns:26px minmax(0,1fr) auto; padding:12px}
+  .sl-big{font-size:26px}
+}
+
+.toast{
+  position:fixed; left:50%; bottom:calc(18px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%);
+  background:var(--ink); color:var(--bg); padding:10px 16px; border-radius:4px; font-size:14.5px; z-index:90;
+  max-width:calc(100% - 32px); box-shadow:var(--shadow);
+}
+.sl-print{display:none}
+
+/* ============ gig mode — always the stage palette ============ */
+.gig{
+  --g-bg:#0E1013; --g-panel:#171A1F; --g-rule:#2A2F37; --g-ink:#EDEAE4; --g-ink2:#A7ADB6; --g-ink3:#727983; --g-accent:#E9A441;
+  --drums:#E0913C; --bass:#D07A6D; --gtr:#74B18E; --vox:#6DA8DC; --ok:#74B18E; --accent:#E9A441; --ink3:#727983;
+  position:fixed; inset:0; z-index:100; background:var(--g-bg); color:var(--g-ink);
+  display:flex; flex-direction:column;
+  padding:calc(12px + env(safe-area-inset-top,0px)) 20px calc(14px + env(safe-area-inset-bottom,0px));
+}
+html.gig-open,html.gig-open body{overflow:hidden}
+.gig-top{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:780px; width:100%; margin:0 auto;
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.1em; font-size:14px; font-weight:600; color:var(--g-ink3);
+}
+.gig-top .pill{font-size:12px}
+.gig-close{
+  width:46px; height:46px; border-radius:6px; border:1px solid var(--g-rule); background:var(--g-panel);
+  color:var(--g-ink); font-size:24px; line-height:1; cursor:pointer;
+}
+.gig-body{flex:1; overflow-y:auto; max-width:780px; width:100%; margin:0 auto; padding-block:20px 16px}
+.gig-title{font-size:clamp(34px,9vw,64px); font-weight:700; letter-spacing:-.03em; line-height:1.02; margin:0 0 8px; text-wrap:balance}
+.gig-artist{font-size:clamp(16px,3.6vw,20px); color:var(--g-ink2); margin:0 0 26px}
+.gig-lab{font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.12em; font-size:13.5px; font-weight:700; color:var(--g-accent); margin:0 0 10px}
+.gig-moves{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px}
+.gmv{
+  font-family:var(--f-mono); font-size:clamp(19px,4.8vw,26px); font-weight:600; padding:8px 14px; border-radius:5px;
+  background:var(--g-panel); border:1px solid var(--g-rule); display:inline-flex; align-items:center; gap:10px;
+}
+.gmv .gchip{width:11px; height:11px; margin:0}
+.gig-none{font-size:clamp(19px,4.8vw,26px); font-weight:600; color:var(--g-ink2); margin:0 0 10px}
+.gig-fx{font-family:var(--f-mono); font-size:16px; color:var(--g-ink2); margin:4px 0 28px}
+.gig-cues{list-style:none; padding:0; margin:0 0 26px; display:flex; flex-direction:column; gap:12px}
+.gig-cues li{font-size:clamp(17px,4.2vw,22px); line-height:1.38; padding-left:20px; position:relative}
+.gig-cues li::before{content:""; position:absolute; left:0; top:.58em; width:8px; height:8px; border-radius:50%; background:var(--g-accent)}
+.gig-cues li.tpl{color:var(--g-ink2)}
+.gig-cues li.tpl::before{background:var(--g-ink3)}
+.gig-notes{font-size:17px; color:var(--g-ink2); white-space:pre-wrap; border-left:3px solid var(--g-rule); padding-left:12px; margin:0 0 26px; max-width:none}
+.gig-next{border-top:1px solid var(--g-rule); padding-top:14px; color:var(--g-ink2); font-size:16px}
+.gig-next b{color:var(--g-ink)}
+.gig-next .gig-lab{display:inline; margin-right:8px}
+.gig-tape{font-size:13.5px; color:var(--g-ink3); margin:0 0 10px; text-align:center}
+.gig-nav{display:grid; grid-template-columns:1fr 1.4fr; gap:10px; max-width:780px; width:100%; margin:0 auto}
+.gig-nav button{
+  min-height:62px; border-radius:6px; border:1px solid var(--g-rule); background:var(--g-panel); color:var(--g-ink);
+  font-family:var(--f-lab); text-transform:uppercase; letter-spacing:.1em; font-size:17px; font-weight:700; cursor:pointer;
+}
+.gig-nav button.next{background:var(--g-accent); color:#131519; border-color:var(--g-accent)}
+.gig-nav button[disabled]{opacity:.3; cursor:default}
+.gig button:focus-visible{outline:2px solid var(--g-ink); outline-offset:2px}
+
+@media print{
+  .sl-controls,.panel,#tplEditor,.songs,.toast,.gig,.sl-store,.tpl-card.add,.sl-rule{display:none !important}
+  .sl-print{display:block}
+  .sl-big{font-size:18pt}
+  .tpl-grid{grid-template-columns:repeat(4,1fr); gap:6px}
+  .tpl-card{padding:7px 9px; box-shadow:none; break-inside:avoid}
+  .how{grid-template-columns:repeat(4,1fr); margin-top:14px}
+  .how p{font-size:8.8pt}
+  .sl-print table{table-layout:fixed}
+  .sl-print th:nth-child(1){width:4%} .sl-print th:nth-child(2){width:21%} .sl-print th:nth-child(3){width:12%}
+  .sl-print th:nth-child(4){width:21%} .sl-print th:nth-child(5){width:8%}
+  .sl-print td{font-size:8.4pt} .sl-print td.mono{font-size:7.8pt}
+  .sl-print tr{break-inside:avoid}
+  .sl-print th{white-space:normal; font-size:8pt; letter-spacing:.06em}
+}
+
+/* ============ print ============ */
+@media print{
+  :root{
+    --bg:#fff; --panel:#fff; --panel2:#F2EFE9; --sink:#E8E3DA;
+    --rule:#C9C2B4; --rule2:#A9A192;
+    --ink:#111; --ink2:#444; --ink3:#6C7079;
+    --shadow:none;
+  }
+  body{font-size:10.5pt; line-height:1.48; background:#fff}
+  .wrap{max-width:none; padding-inline:0; padding-block:0}
+  nav{display:none}
+  .mast{padding-block:0 14px}
+  h1{font-size:30pt}
+  .dek{font-size:11pt}
+  section{padding-block:18px; break-inside:auto}
+  h2{font-size:17pt}
+  h3{font-size:11pt; margin:16px 0 8px}
+  .shead{break-after:avoid}
+  h3,dt{break-after:avoid}
+  .key,.warn,.qn,figure,tr{break-inside:avoid}
+  .figscroll{overflow:visible; box-shadow:none}
+  .figscroll svg{width:100%; height:auto}
+  .tscroll{overflow:visible}
+  table{min-width:0; font-size:8.6pt}
+  th,td{padding:5px 7px}
+  .mono{font-size:8.4pt}
+  .qgrid{grid-template-columns:repeat(3,1fr); gap:8px}
+  .qn{padding:9px 11px}
+  .qn .qv{font-size:10pt}
+  .qn p{font-size:8.8pt}
+  ol.steps li{padding:7px 0 7px 38px; font-size:10pt}
+  .chk input{border-color:#777}
+  .reset{display:none}
+  dd{font-size:10pt}
+  footer{padding-block:14px 0}
+  a{color:var(--ink); text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Four-piece · Yorkville VGM14 · mixing from stage</p>
+  <h1>VGM14 Gig Sheet</h1>
+  <p class="dek">Three send buses, two monitor mixes, a full kit mic'd for the first time, settings you can dial in the dark while holding a guitar, and a starting mix for every song in the set.</p>
+  <div class="mast-meta">
+    <span><b>12</b> of 14 channels</span>
+    <span><b>10</b> mics</span>
+    <span><b>2</b> monitor feeds</span>
+    <span><b>1</b> bus spare</span>
+    <span>Rental <b>Sep 25–28</b></span>
+  </div>
+</header>
+
+<nav>
+  <div class="navscroll">
+    <a href="#quick">Quick notes</a>
+    <a href="#setlist">Setlist</a>
+    <a href="#routing">Routing</a>
+    <a href="#inputs">Inputs</a>
+    <a href="#console">Console</a>
+    <a href="#settings">Settings</a>
+    <a href="#stage">Stage</a>
+    <a href="#cables">Cables</a>
+    <a href="#drummer">Drummer</a>
+    <a href="#loadin">Load-in</a>
+    <a href="#eq">EQ</a>
+    <a href="#drums">Drums</a>
+    <a href="#trouble">Trouble</a>
+  </div>
+</nav>
+
+<!-- ============ QUICK NOTES ============ -->
+<section id="quick">
+  <div class="shead"><span class="snum">00</span><h2>Quick notes</h2></div>
+  <p class="sub">The things that will actually bite you, in the order you'll need them. Everything else in this sheet is the long version of these.</p>
+
+  <div class="qgrid">
+    <div class="qn key2">
+      <p class="qt">Your wedge</p>
+      <p class="qv">ZONE OUT → YXL10P</p>
+      <p>A post-fader copy of the main mix. The Zone knob is your volume all night — not the master.</p>
+    </div>
+    <div class="qn key2">
+      <p class="qt">Drummer's wedge</p>
+      <p class="qv">MON OUT → Kustom FX return</p>
+      <p>MON is pre-fader, so your mix moves never touch it. The MON fader is his volume — he has none.</p>
+    </div>
+    <div class="qn">
+      <p class="qt">Spare bus</p>
+      <p class="qv">AUX — leave it down</p>
+      <p>A whole second monitor mix in reserve. If MON out dies, move one cable and turn up six knobs.</p>
+    </div>
+    <div class="qn hot">
+      <p class="qt">Before anything else</p>
+      <p class="qv">Graphic assign → MAIN</p>
+      <p>It does Main or Mon, never both. Ringing out the room wins.</p>
+    </div>
+    <div class="qn hot">
+      <p class="qt">All six drum channels</p>
+      <p class="qv">MON = OFF</p>
+      <p>He's sitting inside them, and it keeps the overheads from re-amplifying themselves.</p>
+    </div>
+    <div class="qn go">
+      <p class="qt">High-pass filter</p>
+      <p class="qv">IN on everything</p>
+      <p>Except ch 1 kick, ch 4 floor tom, ch 7 bass. Biggest free win on the board.</p>
+    </div>
+    <div class="qn hot">
+      <p class="qt">Phantom is global</p>
+      <p class="qv">48V hits every XLR</p>
+      <p>Needed for the two overheads. Flip it only with the master down. Never plug a mic in live.</p>
+    </div>
+    <div class="qn go">
+      <p class="qt">Setting gain</p>
+      <p class="qv">PFL solo + VU, fader down</p>
+      <p>Their loudest, meter peaking near 0. Gain is not volume.</p>
+    </div>
+    <div class="qn">
+      <p class="qt">Move the kit</p>
+      <p class="qv">Drums downstage</p>
+      <p>Last time's real problem. Every foot forward is free level out front.</p>
+    </div>
+    <div class="qn">
+      <p class="qt">Overheads</p>
+      <p class="qv">Match both distances to snare</p>
+      <p>Use a mic cable as a tape measure. Mismatched overheads are why a mic'd kit sounds small.</p>
+    </div>
+    <div class="qn">
+      <p class="qt">Your guitar</p>
+      <p class="qv">G3Xn mono, cab sim ON</p>
+      <p>L/MONO out only, 1/4" in, gain near minimum. It's a hot line source.</p>
+    </div>
+    <div class="qn key2">
+      <p class="qt">Between songs</p>
+      <p class="qv">Back to the tape, then moves</p>
+      <p>Each song's moves are from the taped base mix. Gig mode shows them one song at a time.</p>
+    </div>
+    <div class="qn hot">
+      <p class="qt">Feedback mid-song</p>
+      <p class="qv">Master down 3 dB first</p>
+      <p>Then find the channel. Don't start twisting EQ while you're playing.</p>
+    </div>
+    <div class="qn">
+      <p class="qt">Vocals vanishing</p>
+      <p class="qv">Pull guitars, don't push vox</p>
+      <p>It's almost always the guitars. 2 dB down beats 2 dB up.</p>
+    </div>
+    <div class="qn go">
+      <p class="qt">Last thing before doors</p>
+      <p class="qv">Tape every fader</p>
+      <p>MON fader included. You will bump something in the dark.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SETLIST ============ -->
+<section id="setlist">
+  <div class="shead"><span class="snum">01</span><h2>Setlist &amp; song mixes</h2></div>
+  <p class="sub">Every song starts from a template on top of the base mix, then gets its own tweaks. Change anything at soundcheck and rehearsal — it saves as you go — and lock a song once it's right.</p>
+
+  <div class="sl-top">
+    <div class="sl-stats" id="slStats"></div>
+    <p class="sl-store" id="slStore" aria-live="polite">Loading setlist…</p>
+  </div>
+
+  <div class="sl-controls">
+    <div class="lead-wrap">
+      <span class="flab" id="leadLab">Who usually solos</span>
+      <div class="seg" id="leadSeg" role="group" aria-labelledby="leadLab">
+        <button type="button" data-lead="gtr1" aria-pressed="false">Gtr 1 · you</button>
+        <button type="button" data-lead="gtr2" aria-pressed="false">Gtr 2</button>
+      </div>
+      <p class="lead-hint" id="leadHint" hidden>Pick one — cues say "the soloist" until you do.</p>
+    </div>
+    <div class="sl-actions">
+      <button type="button" class="btn primary" id="gigBtn" disabled>Gig mode</button>
+      <button type="button" class="btn" id="importBtn" aria-expanded="false" aria-controls="importPanel">Import songs</button>
+      <button type="button" class="btn" id="backupBtn" aria-expanded="false" aria-controls="backupPanel">Backup</button>
+    </div>
+  </div>
+
+  <div class="panel" id="importPanel" hidden>
+    <label class="flab" for="importText">One song per line</label>
+    <textarea id="importText" rows="7" placeholder="Everlong — Foo Fighters — 4:11&#10;Mr. Brightside - The Killers&#10;Basket Case"></textarea>
+    <p class="hint">Title first, then artist and length if you have them, split by a dash or a tab — so a column pasted from a spreadsheet works. Numbers at the start of a line are ignored. Spotify's Copy gives you links rather than names, so paste the names from anywhere else.</p>
+    <div class="row">
+      <label class="flab" for="importTpl">Start them on</label>
+      <select id="importTpl"></select>
+      <button type="button" class="btn primary" id="importGo" disabled>Add songs</button>
+    </div>
+    <p class="hint" id="importPreview" aria-live="polite"></p>
+  </div>
+
+  <div class="panel" id="backupPanel" hidden>
+    <p>The whole setlist — songs, templates and the solo setting — as one block of text. Use it to move your rehearsal mixes into the offline phone app, or to keep a copy before you change a lot.</p>
+    <div class="row">
+      <button type="button" class="btn" id="bkDownload" hidden>Download .json</button>
+      <button type="button" class="btn" id="bkCopy">Copy backup</button>
+    </div>
+    <label class="flab" for="bkText" style="margin-top:14px">Current backup</label>
+    <textarea id="bkText" rows="5" readonly></textarea>
+    <h4>Restore</h4>
+    <label class="flab" for="bkRestore">Paste a backup</label>
+    <textarea id="bkRestore" rows="4" placeholder='{"app":"vgm14-gig-sheet", …}'></textarea>
+    <div class="row"><button type="button" class="btn danger" id="bkRestoreGo" disabled>Replace setlist with this backup</button></div>
+    <p class="hint" id="bkMsg" aria-live="polite"></p>
+  </div>
+
+  <h3>Templates</h3>
+  <div class="tpl-grid" id="tplGrid"></div>
+  <div id="tplEditor"></div>
+
+  <h3>Songs</h3>
+  <p class="sl-rule"><strong>Every number is from the taped base mix</strong> — never from the last song. Between songs: faders back to the tape, then that song's moves.</p>
+  <ol class="songs" id="songList"></ol>
+  <div class="sl-print" id="slPrint"></div>
+
+  <div class="how">
+    <div><b>Small numbers on purpose</b><p>±1–2 dB is a nudge you'll hear on stage. ±4 is a move you'd notice from the back of the room.</p></div>
+    <div><b>Solos are the player's job</b><p>You're playing too. The soloist steps on a patch or boost worth about +3 dB; you only touch the board if there isn't one.</p></div>
+    <div><b>Templates flow down</b><p>Change a template and every song on it follows, except locked ones. A song's own tweaks sit on top.</p></div>
+    <div><b>Lock after soundcheck</b><p>A locked song keeps its exact mix no matter what happens to its template. Set it back to Rehearsed to edit.</p></div>
+  </div>
+</section>
+
+<!-- ============ ROUTING ============ -->
+<section id="routing">
+  <div class="shead"><span class="snum">02</span><h2>Where every output goes</h2></div>
+  <p class="sub">This board has more routing than it looks like from the front: three separate send buses per channel plus a fourth output taken off the main mix. Both monitors are covered and you still have a spare.</p>
+
+  <figure>
+    <div class="figscroll" id="flowHolder"></div>
+    <figcaption>Signal flow — where each bus taps the channel and where it comes out</figcaption>
+  </figure>
+
+  <div class="key">
+    <p class="kh">The move that fixes your monitoring</p>
+    <p>The <strong>Zone/Sub output</strong> is a full-range mono sum of the main mix, tapped <strong>after the main fader</strong>, with its own level knob. Send it to your wedge and you are hearing exactly what the room is getting, at whatever volume you want, with nothing to set up and nothing to keep in sync. Last gig you had no wedge at all and were stepping out in front of the PA to check the mix — this is the fix, and it costs you zero channels and zero sends.</p>
+  </div>
+
+  <h3>Why the drummer gets MON and not AUX</h3>
+  <p>MON is permanently pre-fader, which is exactly what you want for a cue mix — nothing you do to the room mix can disturb it. AUX is the switchable one, which makes it the more flexible spare. MON also has a dedicated fader in the master section, so the drummer's overall level is a single fader you can find without looking, instead of a small knob. That matters a lot given he has no volume control of his own.</p>
+
+  <h3>Why you get Zone and not a real send</h3>
+  <p>Zone is the only output that mirrors the main mix automatically. Any of the three sends would mean building a second mix by hand and then keeping it in sync with the first one all night, while playing guitar. Zone costs nothing and is more accurate than anything you'd build by hand.</p>
+
+  <div class="warn">
+    <p class="kh">The graphic EQ serves one bus or the other</p>
+    <p>The 9-band graphic has an <strong>Assign switch: Main or Mon</strong>. It cannot do both. <strong>Set it to MAIN</strong> — ringing out the room is what saves your show, and the mains are what the audience hears. The consequence is that the drummer's wedge gets no graphic EQ at all, which matters more than usual now that you're going into the FX Return. The drummer section covers how to shape his feed without it.</p>
+  </div>
+
+  <h3>Three things to know before you're standing there</h3>
+  <dl>
+    <dt>Zone is post-master</dt>
+    <dd>Pull the main fader down between songs and your wedge dies with it. Use the Zone knob, not the master, when you want your own level to change.</dd>
+    <dt>Your wedge EQ lives on the speaker</dt>
+    <dd>With the graphic assigned to Main, you have no board EQ on the Zone feed. The YXL10P has a <strong>Monitor voicing mode</strong> on its back panel — that's your wedge EQ, and it's built for exactly this.</dd>
+    <dt>Check the Zone tap in ten seconds at soundcheck</dt>
+    <dd>Sources disagree on whether Zone is taken before or after the graphic. Pull one graphic slider to the floor and listen to your wedge: if it changes, Zone is post-graphic and your wedge follows the room EQ. Either way it works, but it's worth knowing which.</dd>
+  </dl>
+</section>
+
+<!-- ============ INPUTS ============ -->
+<section id="inputs">
+  <div class="shead"><span class="snum">03</span><h2>Input list</h2></div>
+  <p class="sub">Every mic lands on a mono channel, because only the mono channels have the 80&nbsp;Hz high-pass filter and the sweepable mid. Your guitar goes on the stereo pair, where a direct signal with a cab sim misses neither.</p>
+
+  <div class="tscroll">
+    <table>
+      <thead><tr>
+        <th class="n">Ch</th><th>Source</th><th>Mic / DI</th><th>Into</th><th>Stand</th><th class="n">48V</th><th class="n">HPF</th>
+      </tr></thead>
+      <tbody id="inputRows"></tbody>
+    </table>
+  </div>
+
+  <div class="warn">
+    <p class="kh">Phantom power is global on this board</p>
+    <p>One switch puts 48&nbsp;V on <em>every</em> XLR input. Harmless to the SM57s, SM58s and Apex dynamics — all balanced. Two rules anyway: flip it only with the <strong>master fader down</strong>, and never plug or unplug a mic while it's live. This is also why your G3Xn goes in on a <strong>1/4" jack, not XLR</strong> — an unbalanced line source on a phantom-powered XLR input is asking for trouble.</p>
+  </div>
+
+  <p>If the bassist's amp turns out to have an <strong>XLR DI out</strong>, use it instead of the SM57 — more consistent, and it frees a mic and a stand. Engage its ground lift if it has one.</p>
+</section>
+
+<!-- ============ CONSOLE ============ -->
+<section id="console">
+  <div class="shead"><span class="snum">04</span><h2>What the board should look like</h2></div>
+  <p class="sub">Every knob at its starting position. Scroll sideways for the rest of the channels — the same numbers are in the table below if you'd rather read them.</p>
+
+  <div class="legend">
+    <span><i class="gchip g-drums"></i>Drums</span>
+    <span><i class="gchip g-bass"></i>Bass</span>
+    <span><i class="gchip g-gtr"></i>Guitars</span>
+    <span><i class="gchip g-vox"></i>Vocals</span>
+  </div>
+
+  <figure>
+    <div class="figscroll" id="consoleHolder"></div>
+    <figcaption>Starting positions, knobs as clock faces — dial these before anyone plays, then adjust by ear</figcaption>
+  </figure>
+
+  <h3>Master section</h3>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Control</th><th>Set to</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Graphic EQ assign</td><td class="mono on">MAIN</td><td>Ringing out the room beats EQ'ing a cue wedge</td></tr>
+        <tr><td>9-band graphic</td><td class="mono">all flat</td><td>Starting point. Only notch what actually rings</td></tr>
+        <tr><td>Phantom power</td><td class="mono yes">ON</td><td>The two Apex 190 overheads are condensers</td></tr>
+        <tr><td>Main fader</td><td class="mono">unity (0)</td><td>Mix with the channel faders, not the master</td></tr>
+        <tr><td><strong>MON fader</strong></td><td class="mono">−10 dB, raise to taste</td><td><strong>The drummer's volume all night.</strong> His only one, going into the FX Return</td></tr>
+        <tr><td>Zone level</td><td class="mono">10 o'clock</td><td>Your wedge level. Your knob all night</td></tr>
+        <tr><td>Aux master</td><td class="mono off">down / unused</td><td>Spare bus, held in reserve</td></tr>
+        <tr><td>EFX return</td><td class="mono">9–10 o'clock</td><td>Modest. A loud room supplies its own reverb</td></tr>
+        <tr><td>FX preset</td><td class="mono">short plate / small room</td><td>Vocals only. Nothing long</td></tr>
+        <tr><td>USB / media out</td><td class="mono">recording</td><td>Capture the set and listen back. Best mixing lesson you'll get</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ SETTINGS ============ -->
+<section id="settings">
+  <div class="shead"><span class="snum">05</span><h2>Channel settings</h2></div>
+  <p class="sub">Knob positions as clock faces. The mid is a single sweepable band, so each channel gets exactly one mid move — the notes say which one is worth spending it on.</p>
+
+  <div class="tscroll">
+    <table>
+      <thead><tr>
+        <th class="n">Ch</th><th>Source</th><th class="n">Gain</th><th class="n">HPF</th>
+        <th class="n">Low</th><th class="n">Mid freq</th><th class="n">Mid</th><th class="n">High</th>
+        <th class="n">Mon</th><th class="n">Aux</th><th class="n">EFX</th><th class="n">Pan</th><th class="n">Fader</th>
+      </tr></thead>
+      <tbody id="setRows"></tbody>
+    </table>
+  </div>
+
+  <p>Panning: everything centre except the overheads, which get a modest spread. Hard-panning in a small room with two point-source mains just means half the audience misses whatever you panned away from them.</p>
+
+  <h3>The note on each channel</h3>
+  <dl id="notes"></dl>
+</section>
+
+<!-- ============ STAGE ============ -->
+<section id="stage">
+  <div class="shead"><span class="snum">06</span><h2>Stage plot</h2></div>
+  <p class="sub">Two things this drawing exists to show: the mains sit <em>downstage of every vocal mic</em>, and the kit comes <em>forward</em> from where it was last time.</p>
+
+  <figure>
+    <div class="figscroll" id="stageHolder"></div>
+    <figcaption>Top-down. Red dashed line is the downstage limit for any open mic</figcaption>
+  </figure>
+
+  <dl>
+    <dt>Bring the kit downstage</dt>
+    <dd>This is the direct fix for last gig. Put the drummer as far forward as the stage and the band will tolerate — level in and level out, every doubling of distance costs about 6&nbsp;dB, and the further back he is the more the back wall smears what does arrive. The mics do most of the work now, but free level is still free.</dd>
+    <dt>Mains high on the SKS-09B stands</dt>
+    <dd>Tweeter roughly at standing head height, aimed into the room. That's the whole reason for stands — up there the sound clears the front row instead of cooking it.</dd>
+    <dt>Your wedge angled up at your head</dt>
+    <dd>On the floor at your feet. If the YXL10P has a monitor angle moulded into one side, lay it on that side. Set its voicing mode to <strong>Monitor</strong>.</dd>
+    <dt>Put your SM58's dead spot on the wedge</dt>
+    <dd>A cardioid SM58 is deafest directly behind itself. Face the mic with the wedge between you and the audience firing back up at you, and the wedge sits in the null. That geometry is what lets a wedge get loud at all.</dd>
+    <dt>Mixer at your position, within arm's reach</dt>
+    <dd>On a table or a road case beside you — not out front. You're mixing while playing; if you can't reach it between songs it may as well be in the van.</dd>
+  </dl>
+</section>
+
+<!-- ============ CABLES ============ -->
+<section id="cables">
+  <div class="shead"><span class="snum">07</span><h2>Cable map</h2></div>
+  <p class="sub">Thirteen mic cables for ten mics, so you have three spares. Know where they are before you need one.</p>
+
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>From</th><th>To</th><th>Cable</th><th class="n">Qty</th></tr></thead>
+      <tbody>
+        <tr><td>10 mics</td><td>Channels 1–10, XLR in</td><td>RMC-25 mic cable</td><td class="n">10</td></tr>
+        <tr><td>Main out L</td><td>YXL12P left, XLR in</td><td>RMC-25 mic cable</td><td class="n">1</td></tr>
+        <tr><td>Main out R</td><td>YXL12P right, XLR in</td><td>RMC-25 mic cable</td><td class="n">1</td></tr>
+        <tr><td><strong>Zone / Sub out</strong></td><td><strong>YXL10P wedge</strong></td><td>25' 1/4" (or the XLR→1/4" PC-25XPMS)</td><td class="n">1</td></tr>
+        <tr><td><strong>MON out</strong></td><td><strong>Kustom FX Return</strong></td><td>25' 1/4"–1/4"</td><td class="n">1</td></tr>
+        <tr><td>G3Xn — L/MONO out</td><td>Stereo channel, 1/4" in</td><td>Your own guitar cable</td><td class="n">1</td></tr>
+        <tr><td>Mains + wedge</td><td>Power</td><td>IEC 25'</td><td class="n">3</td></tr>
+        <tr><td>Mixer</td><td>Power</td><td>IEC 8'</td><td class="n">1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The mixer's main outputs are XLR, so plain mic cables feed the mains and you keep both PC-25XPMS cables as spares. If a 1/4" run fails at load-in, the PC-25XPMS will get the wedge working — it's XLR at the speaker end, which is what the YXL10P's main input wants. Nothing spare substitutes for the MON-out run, so that's the cable to test first.</p>
+</section>
+
+<!-- ============ DRUMMER ============ -->
+<section id="drummer">
+  <div class="shead"><span class="snum">08</span><h2>The drummer's wedge</h2></div>
+  <p class="sub">Straight into the FX Return, so the vocals never touch a guitar preamp. That's the right call, and it changes what you can adjust once you're playing.</p>
+
+  <div class="key">
+    <p class="kh">What the FX Return actually gets you</p>
+    <p>It lands after the preamp and the whole tone stack, essentially just hitting the power amp and speaker. No guitar voicing, no preamp colour on the vocals — which is the entire point. The trade is that <strong>the amp's Volume, Bass, Mid, Treble and DFX knobs are all upstream of where you're plugging in, so none of them do anything.</strong> The drummer has no controls at all. Your <strong>MON fader is his only volume</strong>, and you have no EQ on his feed either, since the graphic is assigned to Main.</p>
+  </div>
+
+  <h3>So you shape his mix with send levels, not EQ</h3>
+  <p>This is the part that changes with the tone stack out of the picture. A 100-watt guitar speaker has no useful low end, and anything low you send it is wasted power and flap. Your HPFs are already doing most of that work — MON is tapped after the channel EQ and HPF, so every channel with its filter in arrives already cleaned up. The one channel that doesn't is the bass, so keep its MON send moderate rather than maxed and let the 800&nbsp;Hz boost on that channel carry it. Upper harmonics are what survive a guitar speaker anyway; he'll hear the bass line fine.</p>
+
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Channel</th><th class="n">MON</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td><i class="gchip g-drums"></i>Ch 1–6, all drums</td><td class="mono off">OFF</td><td>He's sitting inside them. Also keeps the overheads from re-amplifying themselves</td></tr>
+        <tr><td><i class="gchip g-vox"></i>Ch 9, your vocal</td><td class="mono">2–3 o'clock</td><td>You call the cues, so you're loudest</td></tr>
+        <tr><td><i class="gchip g-vox"></i>Ch 10, vocal 2</td><td class="mono">2 o'clock</td><td>Arrangement cues</td></tr>
+        <tr><td><i class="gchip g-bass"></i>Ch 7, bass</td><td class="mono">1 o'clock</td><td>Enough to lock to. Pushed harder it just eats headroom on lows the speaker can't reproduce</td></tr>
+        <tr><td><i class="gchip g-gtr"></i>Ch 8, Katana</td><td class="mono">10–11 o'clock</td><td>Enough to follow the song, not enough to mask the vocals</td></tr>
+        <tr><td><i class="gchip g-gtr"></i>Ch 11/12, your guitar</td><td class="mono">10–11 o'clock</td><td>Same</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="key">
+    <p class="kh">Do this and it works twice as well</p>
+    <p>Put the amp <strong>on a chair or a road case, aimed across the kit at his head.</strong> This matters more than ever going into the FX Return: you get a fixed amount of power and no way to add gain at the amp, so the only lever left is getting the sound to his ears instead of his shins. Aiming it across the kit rather than up also keeps vocal bleed out of the overheads.</p>
+  </div>
+
+  <h3>If it isn't loud enough</h3>
+  <p>With the MON fader up and the channel sends up, what you've got is what you've got — there's no gain stage left at the amp. If that ceiling is too low, the fallback is moving the cable to the <strong>Rhythm channel's guitar input</strong>, which has preamp gain and hands the drummer his own Volume back. You lose some clarity to the preamp, and you'd want the amp's Bass near 9 o'clock, Mid at 1–2 o'clock, Treble around noon, boost switch off and DFX at zero. Try the FX Return first; for cue-level vocals it should be plenty.</p>
+
+  <p>Set expectations with him either way: it will sound thin. It's a guitar speaker rolling off somewhere above 5&nbsp;kHz. It's a cue wedge, not a mix. Vocals and bass will be audible and that is the entire job.</p>
+</section>
+
+<!-- ============ LOAD-IN ============ -->
+<section id="loadin">
+  <div class="shead"><span class="snum">09</span><h2>Load-in to downbeat</h2></div>
+  <p class="sub">In order. The order matters more than it looks — most of these steps exist to stop a later one from going wrong.</p>
+  <ol class="steps" id="checklist"></ol>
+  <button class="reset" id="resetBtn" type="button">Clear checkboxes</button>
+
+  <h3>Gain staging, properly</h3>
+  <p>This board has <strong>PFL solo on every channel and a VU meter</strong>, so you don't have to guess. Solo the channel, ask for their loudest, and set the gain so the meter peaks around 0 — touching the top, not living there. Do it with the channel fader down. Gain sets how hard the signal hits the board; the fader sets how much of it goes to the room. Confusing those two is the most common reason a mix ends up thin and noisy.</p>
+
+  <h3>Ringing out the mains</h3>
+  <p>With the band quiet, open a vocal mic and slowly push the main fader until it starts to ring. Find that frequency on the 9-band graphic, pull the slider down 3–6&nbsp;dB, repeat two or three times, then stop. Past three notches you're making the PA sound worse than the feedback was.</p>
+  <p><strong>Identifying the ring by ear:</strong> a low howl is 125–250&nbsp;Hz; a hollow "oooo" is 500&nbsp;Hz–1&nbsp;kHz; a hard ring is 2–4&nbsp;kHz; a piercing whistle is 8&nbsp;kHz and up.</p>
+</section>
+
+<!-- ============ EQ ============ -->
+<section id="eq">
+  <div class="shead"><span class="snum">10</span><h2>EQ by symptom</h2></div>
+  <p class="sub">You have one sweepable mid per channel. Sweep with a wide ear, find the offender, then cut it.</p>
+
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>It sounds…</th><th class="n">Look at</th><th>Move</th></tr></thead>
+      <tbody>
+        <tr><td>Boomy, muddy, one note</td><td class="mono">200–350 Hz</td><td>Cut. The number one small-PA problem</td></tr>
+        <tr><td>Boxy, like cardboard</td><td class="mono">400–600 Hz</td><td>Cut 4–6 dB. Toms and kick almost always need this</td></tr>
+        <tr><td>Honky, nasal, a "wah" quality</td><td class="mono">800 Hz–1 kHz</td><td>Cut 3–4 dB</td></tr>
+        <tr><td>Buried, can't make out words</td><td class="mono">2–4 kHz</td><td>Boost 2–3 dB</td></tr>
+        <tr><td>Harsh, brittle, icepick</td><td class="mono">3–5 kHz</td><td>Cut. Classic SM57 on a bright amp</td></tr>
+        <tr><td>Dull, no air on top</td><td class="mono">10–12 kHz</td><td>High shelf up. It's a 12 kHz shelf, so it adds air, not presence</td></tr>
+        <tr><td>Rumble, stage thumps, handling noise</td><td class="mono">below 80 Hz</td><td>Engage the HPF. Free, and it fixes more than any boost</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="key">
+    <p class="kh">The rule for the night</p>
+    <p><strong>Cut to fix, boost to flavour.</strong> Every boost spends headroom you don't have much of — two 12s and a mixer are doing a lot of work already. When you catch yourself reaching for a boost, first try cutting whatever is covering the thing you wanted louder.</p>
+  </div>
+
+  <p>One more on the high shelf: it sits at 12&nbsp;kHz, which is air, not presence. If a vocal needs to cut through, the move is the sweepable mid at 3&nbsp;kHz, not the high shelf. Use the shelf on overheads and vocals for sheen and leave it alone on close-mic'd guitar cabs, where it mostly adds hiss.</p>
+
+  <p>Remember channel EQ is shared: it feeds the mains <em>and</em> the drummer's MON mix, because MON is tapped after the EQ. A cut that fixes a vocal out front also fixes it in his wedge, which is handy — but a big boost you make purely for the room lands in his monitor too.</p>
+</section>
+
+<!-- ============ DRUMS ============ -->
+<section id="drums">
+  <div class="shead"><span class="snum">11</span><h2>Fixing what went wrong out front</h2></div>
+  <p class="bigq">On stage the drums were fine. Out front they weren't — because the kit was the only thing in the band not coming out of a speaker.</p>
+
+  <p>That's the actual diagnosis, and it's a different problem from the one it looks like. Everything else — both guitars, both vocals — arrived at the audience at full strength from two boxes at the front of the stage. The kit arrived acoustically, from well upstage, having lost level the whole way and having bounced off the back wall on the way out. From where you were standing it sounded balanced. Twenty feet out it wasn't close.</p>
+
+  <p>Two independent fixes, and you're doing both this time:</p>
+
+  <dl>
+    <dt>Put the kit in the PA</dt>
+    <dd>That's what the six mics are for. Once kick and snare are coming out of the same speakers as everything else, they arrive with the same authority instead of fighting a distance handicap. This is the main fix.</dd>
+    <dt>Move the kit downstage</dt>
+    <dd>Cheap and worth doing anyway. Distance costs roughly 6&nbsp;dB every time it doubles, and the further upstage the kit is the more of what reaches the room is back-wall reflection rather than the kit itself. Get him as far forward as the stage allows.</dd>
+  </dl>
+
+  <p>Worth knowing what to expect: the mics won't make the kit louder on stage — it's already the loudest thing up there. What they do is make the kick punch and the snare crack <em>land out front</em>. So don't chase "more drums" by pushing all six faders up. Push kick and snare; the toms and overheads are seasoning.</p>
+
+  <p>And your monitoring problem was a separate thing entirely — no wedge, so you were stepping out in front of the PA to hear anything. The Zone feed solves that one, and it means you'd have caught this drum problem yourself last time.</p>
+
+  <h3>Placement, in order of how much it matters</h3>
+  <dl>
+    <dt>Match the overhead distances. This is the big one.</dt>
+    <dd>Use a mic cable as a tape measure: run it from the centre of the snare to one overhead capsule, pinch it, then check the other one is the same length. If the distances don't match, the snare arrives at each mic at a different moment and partially cancels — and a mic'd kit that sounds <em>smaller</em> than the acoustic kit is almost always this. Also keep each overhead at least three times as far from the snare as the snare mic is (the 3:1 rule).</dd>
+    <dt>Angle the snare mic away from the hi-hat</dt>
+    <dd>1–2" in from the rim, over the top head, pointed at the centre, back turned to the hats. There are no gates on this board, so whatever the snare mic hears is in the mix all night.</dd>
+    <dt>Kick mic at the beater, not the middle</dt>
+    <dd>Two to four inches inside the port, aimed at the spot where the beater strikes. That's where click comes from — you're spending the mid band on a 375&nbsp;Hz cut instead, so placement has to supply the attack.</dd>
+    <dt>Check the tom clips against his swing</dt>
+    <dd>Rim clips put the mic right in the stick path. Have him play the fills he actually plays before you settle them, not a polite roll.</dd>
+    <dt>SM57 halfway out on the Katana's cone</dt>
+    <dd>Right up on the grille, an inch or two off, aimed halfway between the dust cap and the edge. Dead centre is bright and harsh, the edge is dark, halfway is the safe start.</dd>
+  </dl>
+
+  <div class="key">
+    <p class="kh">If you run short on time or headroom</p>
+    <p><strong>Pull the tom mics and one overhead.</strong> Kick, snare and a single centred overhead is a completely legitimate three-mic kit and it's far harder to get wrong than six mics. Six open drum mics on a loud stage with no gates is a lot of accumulated bleed, and bleed is what turns a mix to mud. Add the toms back only if the kit still has room to breathe.</p>
+  </div>
+</section>
+
+<!-- ============ TROUBLE ============ -->
+<section id="trouble">
+  <div class="shead"><span class="snum">12</span><h2>Mid-set troubleshooting</h2></div>
+  <p class="sub">You'll be holding a guitar. These are all one move.</p>
+
+  <div class="cols">
+    <dl>
+      <dt>Feedback, right now</dt>
+      <dd>Main fader down 3&nbsp;dB first, then find the channel. Don't start twisting EQ mid-song.</dd>
+      <dt>Vocals disappearing</dt>
+      <dd>It's the guitars, not the vocals. Pull guitars 2&nbsp;dB before you push vocals up.</dd>
+      <dt>You can't hear yourself</dt>
+      <dd>Zone level knob. Not your guitar volume, and not the master.</dd>
+      <dt>Drummer is signalling you</dt>
+      <dd>He can't hear vocals, and he has no knobs of his own. MON fader — one fader, and it doesn't touch the room.</dd>
+    </dl>
+    <dl>
+      <dt>Muddy once the room fills</dt>
+      <dd>Bodies absorb high end. Pull 250&nbsp;Hz on the graphic rather than boosting treble.</dd>
+      <dt>Something's distorting</dt>
+      <dd>Solo it and watch the meter before you touch a fader. A channel clipping at the preamp won't be fixed downstream.</dd>
+      <dt>A channel died</dt>
+      <dd>Cable first, always. You have three spare mic cables — that's why.</dd>
+      <dt>MON out fails entirely</dt>
+      <dd>Move the cable to Aux out, switch Aux to pre, turn up the same six channels. Five minutes, and the bus is already sitting there.</dd>
+    </dl>
+  </div>
+
+  <div class="warn">
+    <p class="kh">Tape your faders before doors</p>
+    <p>Gaff tape along the fader bed and a marker line at each position the moment soundcheck is done — MON fader included. You will bump something in the dark, and reconstructing a mix from memory while playing a song is not a thing anyone does well.</p>
+  </div>
+</section>
+
+<footer>VGM14 gig sheet · settings are starting points, your ears finish the job</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var CH = [
+ {n:"1", src:"Kick", mic:"Apex 325", grp:"drums", stand:"MS-108 short", phantom:false,
+  gain:10.5, hpf:false, low:3.5, midF:375, midG:-5.5, high:0, mon:7, efx:7, pan:"C", fader:0,
+  note:"Spend the one mid band on the 375 Hz cut — that's the cardboard-box honk, and it's worth more than click. Get the click from mic placement instead. HPF stays off; the only thing it would remove here is the part you want."},
+ {n:"2", src:"Snare", mic:"Apex 326", grp:"drums", stand:"rim clip", phantom:false,
+  gain:11, hpf:true, low:0, midF:3500, midG:3, high:2, mon:7, efx:7, pan:"C", fader:0,
+  note:"3.5 kHz up for crack. If the drum reads honky rather than dull, sweep down to 800 Hz and cut instead — you only get one move, so pick the one this drum needs."},
+ {n:"3", src:"Rack tom", mic:"Apex 326", grp:"drums", stand:"rim clip", phantom:false,
+  gain:11, hpf:true, low:0, midF:500, midG:-5.5, high:2, mon:7, efx:7, pan:"C", fader:-4,
+  note:"HPF on — 80 Hz is below a rack tom's fundamental, so it only strips kick bleed. Keep the fader lower than feels right: this mic is open all night and hears everything."},
+ {n:"4", src:"Floor tom", mic:"Apex 326", grp:"drums", stand:"rim clip", phantom:false,
+  gain:11, hpf:false, low:2, midF:400, midG:-5, high:2, mon:7, efx:7, pan:"C", fader:-3,
+  note:"HPF off here — the fundamental is the whole point of a floor tom. Same 400–500 Hz cardboard cut as the rack."},
+ {n:"5", src:"OH left", mic:"Apex 190", grp:"drums", stand:"MS-206B boom", phantom:true,
+  gain:9, hpf:true, low:0, midF:1000, midG:-2, high:3, mon:7, efx:7, pan:"10 o'c", fader:-6,
+  note:"Treat it as a cymbal mic, not a kit mic — you have close mics on everything else. HPF is non-negotiable. Condensers run much hotter than the dynamics, so the gain sits far lower. Needs 48 V."},
+ {n:"6", src:"OH right", mic:"Apex 190", grp:"drums", stand:"MS-206B boom", phantom:true,
+  gain:9, hpf:true, low:0, midF:1000, midG:-2, high:3, mon:7, efx:7, pan:"2 o'c", fader:-6,
+  note:"Measure its distance to the snare centre against OH left and match them. Mismatched overheads are the usual reason a mic'd kit sounds thinner than the acoustic one."},
+ {n:"7", src:"Bass", mic:"SM57 or amp DI", dm:"SM57 / DI", grp:"bass", stand:"MS-206B boom", phantom:false,
+  gain:10.5, hpf:false, low:1, midF:800, midG:3, high:0, mon:13, efx:7, pan:"C", fader:0,
+  note:"Boost 800 Hz for definition, not 80 Hz for weight. The 12s roll off around 55 Hz, so low-end boost just burns headroom and delivers nothing audible. Keep its MON send moderate — it's the one channel with no HPF, and low content is what wastes the drummer's 100 watts."},
+ {n:"8", src:"Gtr 2 · Katana", ds:"Gtr 2", dm:"SM57 Katana", mic:"SM57", grp:"gtr", stand:"MS-108 short", phantom:false,
+  gain:10, hpf:true, low:-1.5, midF:3000, midG:-3.5, high:0, mon:10.5, efx:7, pan:"C", fader:0,
+  note:"HPF on — a guitar cab makes nothing useful below 80 Hz and removing it frees real headroom. Sweep the mid: cut 3 kHz if it's harsh, 400 Hz if it's boomy. And tell him to turn the amp down; it's competing with the PA now, not the room."},
+ {n:"9", src:"Vox 1 · you", ds:"Vox 1", dm:"SM58 · you", mic:"SM58", grp:"vox", stand:"MS-206B boom", phantom:false,
+  gain:13, hpf:true, low:0, midF:3000, midG:2.5, high:2.5, mon:14.5, efx:10.5, pan:"C", fader:3,
+  note:"HPF always. Leave the low shelf alone — proximity effect already gives you more low end than you want. Loudest thing in the drummer's wedge, because you're the one calling cues."},
+ {n:"10", src:"Vox 2", mic:"SM58", grp:"vox", stand:"MS-206B boom", phantom:false,
+  gain:13, hpf:true, low:0, midF:3000, midG:2.5, high:2.5, mon:14, efx:10.5, pan:"C", fader:3,
+  note:"Same as ch 9. Set both vocals louder than feels comfortable from where you're standing — on stage they'll always sound too loud and from the room they'll be right."},
+ {n:"11/12", src:"Gtr 1 · you", ds:"Gtr 1", dm:"G3Xn direct", mic:"G3Xn direct", grp:"gtr", stand:"—", phantom:false, stereo:true,
+  gain:8, hpf:null, low:0, midF:null, loMid:0, midG:-2, high:-2, mon:10.5, efx:7, pan:"C", fader:0,
+  note:"L/MONO output only, one cable — stereo costs a channel and, since your wedge is a mono sum, stereo chorus and delay partly cancel in it. Cab sim must be ON: nothing downstream has a speaker in it. The output is hot, so start with gain near minimum; the preamp goes down to −24 dB for exactly this. Roll the top down a touch if it's fizzy."}
+];
+
+var GRP = {drums:"g-drums", bass:"g-bass", gtr:"g-gtr", vox:"g-vox"};
+
+function clock(v){
+  var h = v % 12; if(h === 0) h = 12;
+  var whole = Math.floor(h), frac = h - whole;
+  return whole + ((frac > 0.24 && frac < 0.76) ? ":30" : ":00");
+}
+function db(v){ return v === 0 ? "flat" : (v > 0 ? "+" : "−") + Math.abs(v) + " dB"; }
+function hz(f){ return f >= 1000 ? (f/1000).toFixed(f % 1000 === 0 ? 0 : 1) + " kHz" : f + " Hz"; }
+function fader(v){ return v === 0 ? "unity" : (v > 0 ? "+" : "−") + Math.abs(v) + " dB"; }
+function aClock(v){ return (v - 12) * 30; }
+function aDb(v){ return (v / 15) * 150; }
+function aFreq(f){ return (Math.log(f/150) / Math.log(5000/150)) * 300 - 150; }
+
+var NS = "http://www.w3.org/2000/svg";
+function el(name, attrs, parent){
+  var e = document.createElementNS(NS, name);
+  for(var k in attrs){ if(attrs[k] !== null && attrs[k] !== undefined) e.setAttribute(k, attrs[k]); }
+  if(parent) parent.appendChild(e);
+  return e;
+}
+function txt(parent, x, y, cls, str, anchor){
+  var t = el("text", {x:x, y:y, "class":cls, "text-anchor":anchor || "middle"}, parent);
+  t.textContent = str;
+  return t;
+}
+
+function drawKnob(g, cx, cy, r, angle, label, value, detent){
+  var a0 = (-150 - 90) * Math.PI/180, a1 = (150 - 90) * Math.PI/180, ra = r + 4.5;
+  el("path", {
+    d:"M " + (cx + ra*Math.cos(a0)).toFixed(2) + " " + (cy + ra*Math.sin(a0)).toFixed(2) +
+      " A " + ra + " " + ra + " 0 1 1 " + (cx + ra*Math.cos(a1)).toFixed(2) + " " + (cy + ra*Math.sin(a1)).toFixed(2),
+    "class":"s-arc"}, g);
+  el("circle", {cx:cx, cy:cy, r:r, "class":"s-face"}, g);
+  if(detent) el("line", {x1:cx, y1:cy - r - 6.5, x2:cx, y2:cy - r - 2.5, "class":"s-det"}, g);
+  var rad = (angle - 90) * Math.PI/180;
+  el("line", {
+    x1:(cx + Math.cos(rad)*r*0.26).toFixed(2), y1:(cy + Math.sin(rad)*r*0.26).toFixed(2),
+    x2:(cx + Math.cos(rad)*r*0.92).toFixed(2), y2:(cy + Math.sin(rad)*r*0.92).toFixed(2),
+    "class":"s-ptr"}, g);
+  txt(g, cx, cy + r + 11, "s-lab", label);
+  txt(g, cx, cy + r + 20.5, "s-val", value);
+}
+
+function pill(g, cx, cy, w, label, active, tone){
+  el("rect", {x:cx-w/2, y:cy-9.5, width:w, height:19, rx:3,
+    fill: active ? "var(--"+tone+")" : "var(--panel2)",
+    stroke: active ? "var(--"+tone+")" : "var(--rule2)", "stroke-width":1}, g);
+  var t = txt(g, cx, cy+4.5, "s-val", label);
+  t.setAttribute("fill", active ? "var(--panel)" : "var(--ink3)");
+  t.setAttribute("font-size", "10");
+}
+
+/* ---------- signal flow ---------- */
+function buildFlow(){
+  var holder = document.getElementById("flowHolder");
+  if(!holder) return;
+  var W = 880, H = 404;
+  var svg = el("svg", {width:W, height:H, viewBox:"0 0 " + W + " " + H, role:"img",
+    "aria-label":"Signal flow: MON taps pre-fader to the drummer, AUX is spare, the channel fader feeds the main bus and the mains, Zone taps the main bus post-fader to your wedge, and EFX taps post-fader into the internal reverb"}, holder);
+
+  el("rect", {x:0, y:0, width:W, height:H, fill:"var(--panel)"}, svg);
+
+  var defs = el("defs", {}, svg);
+  ["rule2","drums","vox","ink"].forEach(function(k){
+    var m = el("marker", {id:"fa-"+k, viewBox:"0 0 10 10", refX:9, refY:5,
+      markerWidth:6, markerHeight:6, orient:"auto-start-reverse"}, defs);
+    el("path", {d:"M 0 0 L 10 5 L 0 10 z", fill:"var(--"+k+")"}, m);
+  });
+
+  function node(x, y, w, h, label, sub, accent){
+    var g = el("g", {}, svg);
+    el("rect", {x:x, y:y, width:w, height:h, rx:4, fill:"var(--panel2)",
+      stroke:accent || "var(--rule2)", "stroke-width":accent ? 1.8 : 1.1}, g);
+    txt(g, x+w/2, y+h/2 + (sub ? -3 : 4.5), "s-src", label);
+    if(sub) txt(g, x+w/2, y+h/2+11, "s-mic", sub);
+  }
+  function wire(x1, y1, x2, y2, tone){
+    el("line", {x1:x1, y1:y1, x2:x2, y2:y2, stroke:"var(--"+tone+")",
+      "stroke-width":1.7, "marker-end":"url(#fa-"+tone+")", fill:"none"}, svg);
+  }
+
+  var C1 = 16, C1W = 150, C2 = 190, C2W = 150, C3 = 380, C3W = 140,
+      C4 = 560, C4W = 120, C5 = 720, C5W = 144, BH = 44;
+  var rows = [62, 132, 202, 272, 342];
+
+  // channel column
+  el("rect", {x:C1, y:40, width:C1W, height:326, rx:5, fill:"var(--panel2)",
+    stroke:"var(--ink2)", "stroke-width":1.8}, svg);
+  txt(svg, C1+C1W/2, 192, "s-src", "CHANNELS 1–12");
+  txt(svg, C1+C1W/2, 208, "s-mic", "gain · HPF · EQ");
+
+  function lane(i, tone, c2, c2s, c3, c3s, c4, c5, c5s, noFeed){
+    var y = rows[i], cy = y;
+    if(c2){
+      node(C2, y-BH/2, C2W, BH, c2, c2s, tone === "rule2" ? null : "var(--"+tone+")");
+      if(!noFeed) wire(C1+C1W, cy, C2-6, cy, "rule2");
+      wire(C2+C2W, cy, C3-6, cy, tone);
+    }
+    node(C3, y-BH/2, C3W, BH, c3, c3s, tone === "rule2" ? null : "var(--"+tone+")");
+    if(c4){
+      wire(C3+C3W, cy, C4-6, cy, tone);
+      node(C4, y-BH/2, C4W, BH, c4, null, tone === "rule2" ? null : "var(--"+tone+")");
+      wire(C4+C4W, cy, C5-6, cy, tone);
+      node(C5, y-BH/2, C5W, BH, c5, c5s, tone === "rule2" ? null : "var(--"+tone+")");
+    } else {
+      var t = txt(svg, C4, cy+4, "s-mic", c5, "start");
+      t.setAttribute("fill", "var(--ink3)");
+    }
+  }
+
+  lane(0, "drums", "MON knob", "pre-fader, fixed", "MON fader", "master section",
+       "MON OUT", "KUSTOM", "drummer · FX return");
+  lane(1, "rule2", "AUX knob", "pre or post", "Aux master", "held down",
+       "AUX OUT", "SPARE", "insurance");
+  lane(2, "ink", "CHANNEL FADER", "+ pan", "MAIN bus", "9-band graphic",
+       "MAIN OUT", "2 × YXL12P", "the room");
+  lane(3, "vox", null, null, "ZONE level", "post main fader",
+       "ZONE OUT", "YXL10P", "your wedge");
+  lane(4, "gtr", "EFX knob", "post-fader", "Internal FX", "reverb", null,
+       "→ returns into the main mix", null, true);
+
+  // main bus down to zone
+  wire(C3+C3W/2, rows[2]+BH/2, C3+C3W/2, rows[3]-BH/2-6, "vox");
+  // fader down to efx
+  wire(C2+C2W/2, rows[2]+BH/2, C2+C2W/2, rows[4]-BH/2-6, "gtr");
+}
+
+/* ---------- console ---------- */
+function buildConsole(){
+  var holder = document.getElementById("consoleHolder");
+  if(!holder) return;
+  var SW = 92, PADL = 16, PADT = 14, R = 11;
+  var W = PADL*2 + SW*CH.length, H = 642;
+
+  var svg = el("svg", {width:W, height:H, viewBox:"0 0 " + W + " " + H, role:"img",
+    "aria-label":"Yorkville VGM14 channel strips with every knob at its starting position"}, holder);
+
+  var rows = {gain:82, hpf:128, low:168, midF:220, midG:272, high:324, mon:376, aux:424, efx:462};
+
+  CH.forEach(function(c, i){
+    var x = PADL + i*SW, cx = x + SW/2;
+    var g = el("g", {}, svg);
+
+    el("rect", {x:x+2, y:PADT, width:SW-4, height:H-PADT-14, rx:3, "class":"s-strip"}, g);
+    el("rect", {x:x+2, y:PADT, width:SW-4, height:3.5, rx:1.5, fill:"var(--" + c.grp + ")"}, g);
+
+    txt(g, cx, PADT+20, "s-ch", "CH " + c.n);
+    txt(g, cx, PADT+35, "s-src", c.ds || c.src);
+    txt(g, cx, PADT+46, "s-mic", c.dm || c.mic);
+    el("line", {x1:x+9, y1:PADT+54, x2:x+SW-9, y2:PADT+54, stroke:"var(--rule)", "stroke-width":1}, g);
+
+    drawKnob(g, cx, rows.gain, R, aClock(c.gain), "Gain", clock(c.gain), false);
+
+    var on = c.hpf === true, na = c.hpf === null;
+    pill(g, cx, rows.hpf, 54, na ? "NO HPF" : (on ? "HPF IN" : "HPF OUT"), on, "ok");
+
+    if(c.stereo){
+      drawKnob(g, cx, rows.low,  R, aDb(c.low),   "Low",    db(c.low),   true);
+      drawKnob(g, cx, rows.midF, R, aDb(c.loMid), "Lo-mid", db(c.loMid), true);
+      drawKnob(g, cx, rows.midG, R, aDb(c.midG),  "Hi-mid", db(c.midG),  true);
+      drawKnob(g, cx, rows.high, R, aDb(c.high),  "High",   db(c.high),  true);
+    } else {
+      drawKnob(g, cx, rows.low,  R, aDb(c.low),    "Low 80",   db(c.low),  true);
+      drawKnob(g, cx, rows.midF, R, aFreq(c.midF), "Mid freq", hz(c.midF), false);
+      drawKnob(g, cx, rows.midG, R, aDb(c.midG),   "Mid",      db(c.midG), true);
+      drawKnob(g, cx, rows.high, R, aDb(c.high),   "High 12k", db(c.high), true);
+    }
+
+    drawKnob(g, cx, rows.mon, R, aClock(c.mon), "Mon → drums",
+      c.mon <= 7 ? "OFF" : clock(c.mon), false);
+    pill(g, cx, rows.aux, 62, "AUX SPARE", false, "ok");
+    drawKnob(g, cx, rows.efx, R, aClock(c.efx), "EFX",
+      c.efx <= 7 ? "OFF" : clock(c.efx), false);
+
+    var fy = 500, fh = 110, fw = 13;
+    el("rect", {x:cx-fw/2, y:fy, width:fw, height:fh, rx:3, "class":"s-track"}, g);
+    var unityY = fy + fh*(1 - 0.75);
+    el("line", {x1:cx-fw/2-7, y1:unityY, x2:cx+fw/2+7, y2:unityY, "class":"s-unity"}, g);
+    var frac = Math.max(0.04, Math.min(0.97, (c.fader + 30) / 40));
+    var capY = fy + fh*(1 - frac);
+    el("rect", {x:cx-13, y:capY-6, width:26, height:12, rx:2.5, "class":"s-cap"}, g);
+    el("line", {x1:cx-11, y1:capY, x2:cx+11, y2:capY, stroke:"var(--panel)", "stroke-width":1.4}, g);
+    txt(g, cx, fy+fh+16, "s-val", fader(c.fader));
+  });
+}
+
+/* ---------- stage plot ---------- */
+function buildStage(){
+  var holder = document.getElementById("stageHolder");
+  if(!holder) return;
+  var W = 880, H = 660;
+  var svg = el("svg", {width:W, height:H, viewBox:"0 0 " + W + " " + H, role:"img",
+    "aria-label":"Top-down stage plot: kit moved downstage, mains downstage of every vocal mic, Zone out to your wedge, MON out to the drummer's amp on a case"}, holder);
+
+  var defs = el("defs", {}, svg);
+  ["vox","drums","ok"].forEach(function(k){
+    var m = el("marker", {id:"sa-"+k, viewBox:"0 0 10 10", refX:9, refY:5,
+      markerWidth:5.5, markerHeight:5.5, orient:"auto-start-reverse"}, defs);
+    el("path", {d:"M 0 0 L 10 5 L 0 10 z", fill:"var(--"+k+")"}, m);
+  });
+
+  el("rect", {x:0, y:0, width:W, height:H, fill:"var(--panel)"}, svg);
+
+  function box(x, y, w, h, label, sub, accent){
+    var g = el("g", {}, svg);
+    el("rect", {x:x, y:y, width:w, height:h, rx:4, fill:"var(--panel2)",
+      stroke:accent || "var(--rule2)", "stroke-width":accent ? 2 : 1.2}, g);
+    txt(g, x+w/2, y+h/2 + (sub ? -2 : 4.5), "s-src", label);
+    if(sub) txt(g, x+w/2, y+h/2+11, "s-mic", sub);
+  }
+  function person(cx, cy, tag){
+    el("circle", {cx:cx, cy:cy, r:16, fill:"var(--panel2)", stroke:"var(--rule2)", "stroke-width":1.2}, svg);
+    txt(svg, cx, cy+4, "s-mic", tag);
+  }
+  function micdot(cx, cy, tag){
+    el("circle", {cx:cx, cy:cy, r:7.5, fill:"var(--vox)"}, svg);
+    var t = txt(svg, cx, cy+22, "s-mic", tag);
+    t.setAttribute("fill", "var(--vox)");
+  }
+
+  txt(svg, 440, 26, "s-lab", "UPSTAGE");
+
+  // old kit position, ghosted
+  el("circle", {cx:440, cy:78, r:46, fill:"none", stroke:"var(--rule2)",
+    "stroke-width":1.4, "stroke-dasharray":"5 5"}, svg);
+  txt(svg, 440, 76, "s-mic", "LAST GIG");
+  txt(svg, 440, 90, "s-mic", "too far back");
+
+  // move arrow
+  el("path", {d:"M 440 122 L 440 150", stroke:"var(--ok)", "stroke-width":2.2,
+    "marker-end":"url(#sa-ok)", fill:"none"}, svg);
+  var mv = txt(svg, 466, 142, "s-lab", "bring it forward", "start");
+  mv.setAttribute("fill", "var(--ok)");
+
+  el("circle", {cx:440, cy:206, r:52, fill:"var(--panel2)", stroke:"var(--drums)", "stroke-width":2}, svg);
+  txt(svg, 440, 200, "s-src", "DRUM KIT");
+  txt(svg, 440, 214, "s-mic", "6 mics");
+  person(440, 284, "DRM");
+
+  box(540, 258, 100, 46, "KUSTOM", "on a case", "var(--drums)");
+  el("path", {d:"M 540 281 L 462 284", stroke:"var(--drums)", "stroke-width":2,
+    "marker-end":"url(#sa-drums)", fill:"none"}, svg);
+  var al = txt(svg, 590, 248, "s-lab", "MON OUT");
+  al.setAttribute("fill", "var(--drums)");
+
+  box(650, 326, 110, 44, "BASS AMP", "SM57 or DI");
+  person(705, 398, "BASS");
+  box(626, 418, 110, 44, "KATANA", "SM57, short stand");
+  person(688, 490, "GTR2");
+  micdot(614, 486, "VOX 2");
+
+  box(90, 372, 118, 46, "MIXER", "at your side", "var(--accent)");
+  person(232, 436, "YOU");
+  box(176, 480, 96, 32, "WEDGE", null, "var(--vox)");
+  el("path", {d:"M 232 480 L 232 458", stroke:"var(--vox)", "stroke-width":2,
+    "marker-end":"url(#sa-vox)", fill:"none"}, svg);
+  var zl = txt(svg, 168, 474, "s-lab", "ZONE OUT", "end");
+  zl.setAttribute("fill", "var(--vox)");
+  micdot(300, 486, "VOX 1");
+
+  el("line", {x1:24, y1:528, x2:856, y2:528, stroke:"var(--danger)",
+    "stroke-width":1.6, "stroke-dasharray":"7 5"}, svg);
+  var ml = txt(svg, 440, 522, "s-lab", "no open mic downstage of this line");
+  ml.setAttribute("fill", "var(--danger)");
+
+  [[40, "MAIN L"], [756, "MAIN R"]].forEach(function(pp){
+    var g = el("g", {}, svg);
+    el("path", {d:"M " + pp[0] + " 538 l 84 0 l -14 48 l -56 0 z",
+      fill:"var(--panel2)", stroke:"var(--ink2)", "stroke-width":2}, g);
+    txt(g, pp[0]+42, 557, "s-src", "YXL12P");
+    txt(g, pp[0]+42, 570, "s-mic", pp[1]);
+  });
+
+  el("rect", {x:0, y:598, width:W, height:H-598, fill:"var(--panel2)"}, svg);
+  txt(svg, 440, 634, "s-lab", "audience · room");
+}
+
+/* ---------- tables ---------- */
+function buildTables(){
+  var ir = document.getElementById("inputRows");
+  var sr = document.getElementById("setRows");
+  var nd = document.getElementById("notes");
+  if(!ir || !sr || !nd) return;
+
+  CH.forEach(function(c){
+    var tr = document.createElement("tr");
+    tr.innerHTML =
+      '<td class="n">' + c.n + '</td>' +
+      '<td><i class="gchip ' + GRP[c.grp] + '"></i>' + c.src + '</td>' +
+      '<td>' + c.mic + '</td>' +
+      '<td class="mono">' + (c.stereo ? '1/4" L only' : "XLR") + '</td>' +
+      '<td>' + c.stand + '</td>' +
+      '<td class="n ' + (c.phantom ? "yes" : "off") + '">' + (c.phantom ? "48V" : "—") + '</td>' +
+      '<td class="n ' + (c.hpf === true ? "on" : "off") + '">' +
+        (c.hpf === null ? "n/a" : (c.hpf ? "IN" : "out")) + '</td>';
+    ir.appendChild(tr);
+
+    var tr2 = document.createElement("tr");
+    tr2.innerHTML =
+      '<td class="n">' + c.n + '</td>' +
+      '<td><i class="gchip ' + GRP[c.grp] + '"></i>' + c.src + '</td>' +
+      '<td class="mono">' + clock(c.gain) + '</td>' +
+      '<td class="mono ' + (c.hpf === true ? "on" : "off") + '">' +
+        (c.hpf === null ? "—" : (c.hpf ? "IN" : "out")) + '</td>' +
+      '<td class="mono">' + db(c.low) + '</td>' +
+      '<td class="mono">' + (c.stereo ? "fixed" : hz(c.midF)) + '</td>' +
+      '<td class="mono">' + db(c.midG) + '</td>' +
+      '<td class="mono">' + db(c.high) + '</td>' +
+      '<td class="mono ' + (c.mon <= 7 ? "off" : "") + '">' + (c.mon <= 7 ? "off" : clock(c.mon)) + '</td>' +
+      '<td class="mono off">—</td>' +
+      '<td class="mono">' + (c.efx <= 7 ? "off" : clock(c.efx)) + '</td>' +
+      '<td class="mono">' + c.pan + '</td>' +
+      '<td class="mono">' + fader(c.fader) + '</td>';
+    sr.appendChild(tr2);
+
+    var dt = document.createElement("dt");
+    dt.textContent = "Ch " + c.n + " · " + c.src;
+    var dd = document.createElement("dd");
+    dd.textContent = c.note;
+    nd.appendChild(dt); nd.appendChild(dd);
+  });
+}
+
+var STEPS = [
+  "Kit downstage. Decide where the drums go before anything else is placed — everything else works around it.",
+  "Speakers up. Both mains on stands and downstage of every vocal mic; your wedge on the floor at your feet.",
+  "Master fader all the way down. Phantom OFF. Every channel fader down, every gain at minimum, EQ flat, HPFs in except channels 1, 4 and 7.",
+  "Graphic EQ assign switch to MAIN, all nine sliders flat.",
+  "Run all the cable. Mics go on last. Test the MON out run first — it's the one you have no spare for.",
+  "Powered speakers on last, after everything else is running — and off first at the end of the night. Saves you a thump through the PA.",
+  "Phantom ON for the two overheads, with the master still down.",
+  "Master to unity. Bring up channel 9, your vocal, on its own. Set the gain, get it loud in the room, confirm it doesn't ring.",
+  "Gain-stage one channel at a time: PFL solo it, ask for their loudest, raise the gain until the VU meter peaks around 0. Fader stays down.",
+  "Drums alone, in order: kick, snare, toms, overheads. Get the kit sounding like a kit before anything joins it.",
+  "Add bass. Kick and bass together are the entire low end of the show — if they're fighting each other, nothing later will fix it.",
+  "Add both guitars. Both of you turn down.",
+  "Add vocals, louder than feels comfortable from where you're standing.",
+  "Set the Zone level so your wedge sits right, and switch the YXL10P to Monitor voicing mode.",
+  "Pull one graphic slider to the floor and listen to your wedge, so you know whether Zone is tapped before or after the graphic. Put it back.",
+  "Build the drummer's MON mix: all six drum channels at zero, vocals up, bass moderate, guitars for cues. Bring the MON fader up and ask him what he's missing.",
+  "Walk out front while the band plays. This is the one thing you cannot do during the show — fix the balance from there.",
+  "Ring out the mains on the 9-band graphic if there's time. Three notches maximum.",
+  "Tape the fader positions, MON fader included. Gaff tape and a marker.",
+  "Phone on the mixer with Gig mode open on song 1. It keeps the screen awake while it's open."
+];
+
+function buildChecklist(){
+  var ol = document.getElementById("checklist");
+  if(!ol) return;
+  var store = {};
+  try { store = JSON.parse(localStorage.getItem("vgm14-checklist-v3") || "{}") || {}; } catch(e){ store = {}; }
+  function save(){ try { localStorage.setItem("vgm14-checklist-v3", JSON.stringify(store)); } catch(e){} }
+
+  STEPS.forEach(function(s, i){
+    var li = document.createElement("li");
+    var lab = document.createElement("label");
+    lab.className = "chk";
+    var cb = document.createElement("input");
+    cb.type = "checkbox"; cb.id = "step-" + i; cb.checked = !!store[i];
+    var sp = document.createElement("span");
+    sp.textContent = s;
+    cb.addEventListener("change", function(){ store[i] = cb.checked; save(); });
+    lab.appendChild(cb); lab.appendChild(sp);
+    li.appendChild(lab); ol.appendChild(li);
+  });
+
+  var btn = document.getElementById("resetBtn");
+  if(btn) btn.addEventListener("click", function(){
+    store = {}; save();
+    STEPS.forEach(function(_, i){
+      var cb = document.getElementById("step-" + i);
+      if(cb) cb.checked = false;
+    });
+  });
+}
+
+buildTables();
+buildFlow();
+buildConsole();
+buildStage();
+buildChecklist();
+
+})();
+</script>
+
+<div class="gig" id="gig" role="dialog" aria-modal="true" aria-labelledby="gigTitle" hidden>
+  <div class="gig-top">
+    <span id="gigPos"></span>
+    <span id="gigStatus"></span>
+    <button type="button" class="gig-close" id="gigClose" aria-label="Close gig mode">×</button>
+  </div>
+  <div class="gig-body" id="gigBody"></div>
+  <p class="gig-tape">Faders back to the tape, then the moves · swipe or use the buttons</p>
+  <div class="gig-nav">
+    <button type="button" id="gigPrev">‹ Prev</button>
+    <button type="button" class="next" id="gigNext">Next ›</button>
+  </div>
+</div>
+<div class="toast" id="slToast" role="status" hidden></div>
+
+<script type="application/json" id="setlistStarter">{"app": "vgm14-gig-sheet", "version": 1, "settings": {"defaultLead": ""}, "templates": [{"id": "base", "order": 1, "name": "Base mix", "fx": "normal", "off": {}, "blurb": "Straight ahead. Faders on the tape, touch nothing.", "cues": []}, {"id": "drive", "order": 2, "name": "Driving rock", "fx": "normal", "off": {"kick": 1, "snare": 1, "bass": 1, "vox1": 1}, "blurb": "High energy. Kick, snare and bass a touch up and locked together; vocal just on top.", "cues": ["Starts loud — everything on the tape before the count"]}, {"id": "groove", "order": 3, "name": "Groove / light", "fx": "normal", "off": {"snare": -2, "toms": -2, "oh": -3, "bass": 2, "gtr1": -1, "gtr2": -1, "vox1": 1}, "blurb": "Funk, reggae, pop. Drums play lighter, bass carries it, guitars sit under the vocal.", "cues": ["Rhythm guitar is short and choppy — tuck it, don't bury it"]}, {"id": "feature", "order": 4, "name": "Guitar feature", "fx": "normal", "off": {"oh": -1}, "blurb": "The lead guitar is the hook. Solos get boosted by the player, not the board.", "cues": ["Solo: {LEAD} steps on a solo patch (+3 dB) — not your job at the board", "No solo patch? {LEAD} fader +4 for the solo, back to the tape after"]}, {"id": "anthem", "order": 5, "name": "Singalong anthem", "fx": "wet", "off": {"vox1": 1, "vox2": 1}, "blurb": "Everyone knows the words. Vocals a touch up, a bit more reverb, then let the room carry it.", "cues": ["Chorus: the room sings louder than you — don't chase it with the fader"]}, {"id": "wordy", "order": 6, "name": "Fast & wordy", "fx": "dry", "off": {"vox1": 2, "gtr1": -1, "gtr2": -1, "oh": -1}, "blurb": "The lyrics are the song. Vocal on top, guitars and cymbals make room, reverb pulled back so syllables don't smear.", "cues": ["Words getting lost? Sweep Vox 1 mid to 3 kHz, +3"]}, {"id": "dynamic", "order": 7, "name": "Quiet → loud", "fx": "normal", "off": {}, "blurb": "A big drop and build inside the song. The band plays the dynamics; you don't fake them with faders.", "cues": ["Quiet part: leave the faders alone — the band drops, not you", "If the quiet part vanishes in your wedge, Vox 1 +2 for that section only"]}], "songs": [{"id": "s01", "order": 1, "title": "Can't Stop", "artist": "Red Hot Chili Peppers", "dur": 269, "tpl": "drive", "delta": {"bass": 1}, "fx": null, "lead": "", "cues": ["Opens on muted guitar alone — up before the count", "Fast rhythmic verses — vocal stays on top", "Bass is a second lead instrument in this one"], "notes": "", "status": "draft", "frozen": null}, {"id": "s02", "order": 2, "title": "Are You Gonna Be My Girl", "artist": "Jet", "dur": 214, "tpl": "drive", "delta": {"bass": 1}, "fx": null, "lead": "", "cues": ["Opens on the bass and drum groove — bass up from bar one", "Shouted vocal: watch the Vox 1 clip LED, back the gain off a hair if it lights"], "notes": "", "status": "draft", "frozen": null}, {"id": "s03", "order": 3, "title": "This Love", "artist": "Maroon 5", "dur": 206, "tpl": "groove", "delta": {}, "fx": null, "lead": "", "cues": ["No keys in the band — whoever covers the piano part goes +2", "High falsetto lines thin out; don't add more 3 kHz to chase them"], "notes": "", "status": "draft", "frozen": null}, {"id": "s04", "order": 4, "title": "Summer Of '69", "artist": "Bryan Adams", "dur": 216, "tpl": "anthem", "delta": {}, "fx": null, "lead": "", "cues": ["Guitar solo: {LEAD} solo patch"], "notes": "", "status": "draft", "frozen": null}, {"id": "s05", "order": 5, "title": "New Orleans Is Sinking", "artist": "The Tragically Hip", "dur": 257, "tpl": "anthem", "delta": {"gtr1": 1, "gtr2": 1}, "fx": null, "lead": "", "cues": ["Riff-driven — both guitars sit a touch higher than usual", "An Ontario room knows every word"], "notes": "", "status": "draft", "frozen": null}, {"id": "s06", "order": 6, "title": "Semi-Charmed Life", "artist": "Third Eye Blind", "dur": 268, "tpl": "wordy", "delta": {"vox2": 1}, "fx": null, "lead": "", "cues": ["'Doo doo doo' hook — Vox 2 is up for it", "Mid-song breakdown drops quiet, then builds — the band does it"], "notes": "", "status": "draft", "frozen": null}, {"id": "s07", "order": 7, "title": "Sultans Of Swing", "artist": "Dire Straits", "dur": 348, "tpl": "feature", "delta": {"snare": -2, "toms": -2, "oh": -1}, "fx": null, "lead": "", "cues": ["Clean lead runs through the whole song — {LEAD} sits above everything, not just in solos", "Two solos; the last one runs long into the outro", "Drums play light — don't push the kit"], "notes": "", "status": "draft", "frozen": null}, {"id": "s08", "order": 8, "title": "Santeria", "artist": "Sublime", "dur": 183, "tpl": "groove", "delta": {}, "fx": null, "lead": "", "cues": ["Intro lick: {LEAD}", "Solo mid-song: {LEAD} solo patch", "Bass carries the song"], "notes": "", "status": "draft", "frozen": null}, {"id": "s09", "order": 9, "title": "Stacy's Mom", "artist": "Fountains Of Wayne", "dur": 198, "tpl": "drive", "delta": {"vox2": 2}, "fx": null, "lead": "", "cues": ["Harmony hook on the chorus — Vox 2 up so it reads as a hook, not a mumble"], "notes": "", "status": "draft", "frozen": null}, {"id": "s10", "order": 10, "title": "Sex on Fire", "artist": "Kings of Leon", "dur": 203, "tpl": "drive", "delta": {}, "fx": null, "lead": "", "cues": ["Chorus vocal jumps way up in level — set Vox 1 gain on the chorus, not the verse"], "notes": "", "status": "draft", "frozen": null}, {"id": "s11", "order": 11, "title": "Everlong", "artist": "Foo Fighters", "dur": 251, "tpl": "dynamic", "delta": {"kick": 1, "snare": 1}, "fx": null, "lead": "", "cues": ["Opens on one guitar alone — up before the count", "Bridge drops to almost nothing, then slams back — hands off", "Drummer works hardest here — make sure his MON has vocals"], "notes": "", "status": "draft", "frozen": null}, {"id": "s12", "order": 12, "title": "Basket Case", "artist": "Green Day", "dur": 182, "tpl": "wordy", "delta": {}, "fx": null, "lead": "", "cues": ["First verse is vocal + one guitar only — both up before the count"], "notes": "", "status": "draft", "frozen": null}, {"id": "s13", "order": 13, "title": "Sweet Child O' Mine", "artist": "Guns N' Roses", "dur": 356, "tpl": "feature", "delta": {}, "fx": null, "lead": "", "cues": ["Intro riff is the song — {LEAD} up from the first note", "Two solos: mid-song and the long outro", "High vocal gets shrill — cut Vox 1 mid at 3–4 kHz if it bites"], "notes": "", "status": "draft", "frozen": null}, {"id": "s14", "order": 14, "title": "Mr. Brightside", "artist": "The Killers", "dur": 223, "tpl": "anthem", "delta": {}, "fx": null, "lead": "", "cues": ["Opens on the guitar riff alone", "The whole room sings this one"], "notes": "", "status": "draft", "frozen": null}, {"id": "s15", "order": 15, "title": "Learn to Fly", "artist": "Foo Fighters", "dur": 235, "tpl": "base", "delta": {}, "fx": null, "lead": "", "cues": [], "notes": "", "status": "draft", "frozen": null}, {"id": "s16", "order": 16, "title": "Free Bird", "artist": "Lynyrd Skynyrd", "dur": 547, "tpl": "dynamic", "delta": {}, "fx": "wet", "lead": "both", "cues": ["Part 1 is slow — drums light, Vox 1 +2, reverb stays wet", "Tempo doubles into the solo section — Vox 1 back to the tape, EFX back to 10:30", "Both guitars trade and harmonize — neither boosts, match them by ear", "Nine minutes — tune right before it"], "notes": "", "status": "draft", "frozen": null}, {"id": "s17", "order": 17, "title": "Don't Look Back In Anger", "artist": "Oasis", "dur": 288, "tpl": "anthem", "delta": {}, "fx": null, "lead": "", "cues": ["Piano intro in the original — whoever covers it on guitar goes +2 for the intro", "'So Sally can wait' — let the crowd have it", "Guitar solo: {LEAD} solo patch"], "notes": "", "status": "draft", "frozen": null}]}</script>
+<script>
+(function(){
+"use strict";
+
+/* ---------------- constants ---------------- */
+const KEYS = [
+  {k:"kick",  lab:"Kick",  g:"drums"},
+  {k:"snare", lab:"Snare", g:"drums"},
+  {k:"toms",  lab:"Toms",  g:"drums"},
+  {k:"oh",    lab:"OH",    g:"drums"},
+  {k:"bass",  lab:"Bass",  g:"bass"},
+  {k:"gtr1",  lab:"Gtr 1", g:"gtr"},
+  {k:"gtr2",  lab:"Gtr 2", g:"gtr"},
+  {k:"vox1",  lab:"Vox 1", g:"vox"},
+  {k:"vox2",  lab:"Vox 2", g:"vox"}
+];
+const GCOL = {drums:"g-drums", bass:"g-bass", gtr:"g-gtr", vox:"g-vox"};
+const FX_LAB = {dry:"Dry", normal:"Normal", wet:"Wet"};
+const FX_KNOB = {dry:"9:00", normal:"10:30", wet:"12:00"};
+const ST_LAB = {draft:"Draft", rehearsed:"Rehearsed", locked:"Locked"};
+const LEAD_LAB = {gtr1:"Gtr 1 (you)", gtr2:"Gtr 2", both:"both guitars"};
+const LOCAL_KEY = "vgm14-setlist-v1";
+const GIG_KEY = "vgm14-gig-song";
+const LIM = 10;
+
+const $ = (id) => document.getElementById(id);
+
+let STARTER = {templates:[], songs:[], settings:{defaultLead:""}};
+try { STARTER = JSON.parse($("setlistStarter").textContent); } catch(e) {}
+
+const S = {
+  mode:"loading", localWhy:"", ready:false, readOnly:false,
+  songs:{}, templates:{}, settings:{defaultLead:""},
+  openSong:null, openTpl:null, db:null, downloads:null, gig:-1
+};
+
+/* ---------------- helpers ---------------- */
+function clamp(n){ n = Math.round(Number(n) || 0); return Math.max(-LIM, Math.min(LIM, n)); }
+function sgn(n){ return n > 0 ? "+" + n : n < 0 ? "−" + Math.abs(n) : "0"; }
+function dur(s){ s = Math.max(0, Math.round(s || 0)); return Math.floor(s/60) + ":" + String(s % 60).padStart(2, "0"); }
+function clone(o){ return JSON.parse(JSON.stringify(o == null ? {} : o)); }
+function uid(p){ return p + "-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+function h(tag, attrs, ...kids){
+  const e = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === "class") e.className = v;
+    else if (k.startsWith("on") && typeof v === "function") e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v === true ? "" : String(v));
+  }
+  for (const c of kids.flat(Infinity)) {
+    if (c == null || c === false) continue;
+    e.append(c.nodeType ? c : document.createTextNode(String(c)));
+  }
+  return e;
+}
+function fillSelect(sel, opts, value){
+  const sig = JSON.stringify(opts);
+  if (sel.dataset.sig !== sig) {
+    sel.replaceChildren(...opts.map(([v, l]) => h("option", {value:v}, l)));
+    sel.dataset.sig = sig;
+  }
+  if (sel.value !== value) sel.value = value;
+}
+
+/* ---------------- model ---------------- */
+function normSong(s){
+  return {
+    id:String(s.id), order:Number(s.order) || 0,
+    title:String(s.title || "Untitled"), artist:String(s.artist || ""), dur:Number(s.dur) || 0,
+    tpl:String(s.tpl || "base"), delta:Object.assign({}, s.delta || {}),
+    fx: FX_LAB[s.fx] ? s.fx : null, lead: LEAD_LAB[s.lead] ? s.lead : "",
+    cues: Array.isArray(s.cues) ? s.cues.map(String) : [], notes:String(s.notes || ""),
+    status: ST_LAB[s.status] ? s.status : "draft",
+    frozen: s.frozen && s.frozen.off ? {off:Object.assign({}, s.frozen.off), fx: FX_LAB[s.frozen.fx] ? s.frozen.fx : "normal"} : null
+  };
+}
+function normTpl(t){
+  return {
+    id:String(t.id), order:Number(t.order) || 0, name:String(t.name || "Template"),
+    blurb:String(t.blurb || ""), off:Object.assign({}, t.off || {}),
+    fx: FX_LAB[t.fx] ? t.fx : "normal", cues: Array.isArray(t.cues) ? t.cues.map(String) : []
+  };
+}
+function songsSorted(){
+  return Object.values(S.songs).sort((a, b) => (a.order || 1e9) - (b.order || 1e9) || a.title.localeCompare(b.title));
+}
+function tplsSorted(){
+  return Object.values(S.templates).sort((a, b) => (a.order || 1e9) - (b.order || 1e9) || a.name.localeCompare(b.name));
+}
+const NO_TPL = {id:"", name:"No template", off:{}, fx:"normal", cues:[], blurb:""};
+function tplOf(s){ return S.templates[s.tpl] || NO_TPL; }
+function isLocked(s){ return s.status === "locked"; }
+function eff(s){
+  if (isLocked(s) && s.frozen) {
+    const off = {}; KEYS.forEach(({k}) => off[k] = clamp(s.frozen.off[k] || 0));
+    return {off, fx:s.frozen.fx};
+  }
+  const t = tplOf(s), off = {};
+  KEYS.forEach(({k}) => off[k] = clamp((t.off[k] || 0) + (s.delta[k] || 0)));
+  return {off, fx: s.fx || t.fx || "normal"};
+}
+function leadName(s){ return LEAD_LAB[s.lead || S.settings.defaultLead] || "the soloist"; }
+function resolve(text, s){ return String(text).split("{LEAD}").join(leadName(s)); }
+function movesEl(off, fx){
+  const chips = KEYS.filter(({k}) => off[k]).map(({k, lab, g}) =>
+    h("span", {class:"mv"}, h("i", {class:"gchip " + GCOL[g]}), lab + " " + sgn(off[k])));
+  if (fx && fx !== "normal") chips.push(h("span", {class:"mv fx"}, "Reverb " + FX_LAB[fx].toLowerCase()));
+  if (!chips.length) chips.push(h("span", {class:"mv none"}, "No moves"));
+  return h("span", {class:"moves"}, chips);
+}
+function summaryText(s, withFx){
+  const e = eff(s);
+  const parts = KEYS.filter(({k}) => e.off[k]).map(({k, lab}) => lab + " " + sgn(e.off[k]));
+  if (withFx !== false && e.fx !== "normal") parts.push("reverb " + FX_LAB[e.fx].toLowerCase());
+  return parts.length ? parts.join(", ") : "no moves";
+}
+
+function loadData(d){
+  S.templates = {}; (d.templates || []).forEach(t => { if (t && t.id) S.templates[t.id] = normTpl(t); });
+  S.songs = {}; (d.songs || []).forEach(s => { if (s && s.id) S.songs[s.id] = normSong(s); });
+  S.settings = Object.assign({defaultLead:""}, d.settings || {});
+}
+function exportData(){
+  return {
+    app:"vgm14-gig-sheet", version:1, exported:new Date().toISOString(),
+    settings:clone(S.settings), templates:tplsSorted().map(clone), songs:songsSorted().map(clone)
+  };
+}
+function bodyOf(o){ const b = clone(o); delete b.id; return b; }
+
+/* ---------------- storage ---------------- */
+const dirty = new Set(), pendingDel = new Set(), timers = {}, chains = {};
+let saving = 0;
+
+function keyOf(kind, id){ return kind === "settings" ? "settings/main" : kind + "/" + id; }
+function bodyFor(key){
+  if (key === "settings/main") return clone(S.settings);
+  const [kind, id] = key.split("/");
+  const src = kind === "songs" ? S.songs[id] : S.templates[id];
+  return src ? bodyOf(src) : null;
+}
+function saveLocal(){ try { localStorage.setItem(LOCAL_KEY, JSON.stringify(exportData())); } catch(e) {} }
+
+function touch(kind, id){
+  if (S.readOnly) return;
+  if (S.mode === "local") {
+    clearTimeout(timers.__local); timers.__local = setTimeout(saveLocal, 250);
+  } else if (S.mode === "db") {
+    const key = keyOf(kind, id);
+    dirty.add(key);
+    clearTimeout(timers[key]);
+    timers[key] = setTimeout(() => flush(key), 600);
+  }
+  render();
+}
+function flush(key){
+  delete timers[key];
+  saving++; renderStore();
+  chains[key] = (chains[key] || Promise.resolve())
+    .then(async () => { const b = bodyFor(key); if (b) await withRetry(() => S.db.doc(key).set(b)); })
+    .catch(onWriteError)
+    .finally(() => { saving--; if (!timers[key]) dirty.delete(key); renderStore(); });
+}
+async function withRetry(fn){
+  try { return await fn(); }
+  catch(e) {
+    const c = e && e.code;
+    if (c === "unavailable" || c === "resource_exhausted") { await sleep(500 + Math.random() * 700); return await fn(); }
+    throw e;
+  }
+}
+function onWriteError(e){
+  const c = e && e.code;
+  if (c === "invalid_argument" || c === "revoked" || c === "not_granted" || c === "capability_disabled") {
+    S.readOnly = true; render();
+    toast("This setlist is view-only for you, so changes aren't being saved.");
+  } else if (c === "quota_exceeded") {
+    toast("The setlist is full. Delete some songs before adding more.");
+  } else {
+    toast("Couldn't save that change. Check your connection and try again.");
+  }
+}
+async function removeDoc(kind, id){
+  const key = keyOf(kind, id);
+  if (S.mode === "local") { saveLocal(); return; }
+  if (S.mode !== "db") return;
+  clearTimeout(timers[key]); delete timers[key]; dirty.delete(key); pendingDel.add(key);
+  saving++; renderStore();
+  try { await (chains[key] || Promise.resolve()).catch(() => {}); await withRetry(() => S.db.doc(key).delete()); }
+  catch(e) { onWriteError(e); }
+  finally { pendingDel.delete(key); saving--; renderStore(); }
+}
+async function bulk(ops){
+  if (S.mode === "local") { saveLocal(); return true; }
+  if (S.mode !== "db") return false;
+  ops.forEach(o => o.body ? dirty.add(o.key) : pendingDel.add(o.key));
+  saving++; renderStore();
+  let ok = true;
+  try {
+    for (const o of ops) {
+      if (o.body) { await withRetry(() => S.db.doc(o.key).set(o.body)); dirty.delete(o.key); }
+      else { await withRetry(() => S.db.doc(o.key).delete()); pendingDel.delete(o.key); }
+    }
+  } catch(e) { ok = false; onWriteError(e); }
+  finally { ops.forEach(o => { dirty.delete(o.key); pendingDel.delete(o.key); }); saving--; renderStore(); }
+  return ok;
+}
+
+function mergeColl(kind, snap){
+  const cur = kind === "songs" ? S.songs : S.templates, next = {};
+  snap.docs.forEach(d => {
+    if (!d.exists) return;
+    const key = kind + "/" + d.id;
+    if (pendingDel.has(key)) return;
+    const raw = Object.assign({}, d.data(), {id:d.id});
+    next[d.id] = kind === "songs" ? normSong(raw) : normTpl(raw);
+  });
+  Object.keys(cur).forEach(id => { if (dirty.has(kind + "/" + id)) next[id] = cur[id]; });
+  if (kind === "songs") S.songs = next; else S.templates = next;
+}
+function startDb(db){
+  S.mode = "db"; S.db = db;
+  const got = {songs:false, templates:false, settings:false};
+  const ready = () => { if (!S.ready && got.songs && got.templates && got.settings) S.ready = true; render(); };
+  const onErr = (e) => {
+    if (e && (e.code === "revoked" || e.code === "not_granted")) { S.readOnly = true; render(); return; }
+    toast("Lost the connection to the saved setlist. Reload the page to reconnect.");
+  };
+  db.collection("songs").onSnapshot(snap => {
+    mergeColl("songs", snap);
+    if (!snap.metadata.fromCache || snap.size) got.songs = true;
+    ready();
+  }, onErr);
+  db.collection("templates").onSnapshot(snap => {
+    mergeColl("templates", snap);
+    if (!snap.metadata.fromCache || snap.size) got.templates = true;
+    ready();
+  }, onErr);
+  db.doc("settings/main").onSnapshot(d => {
+    if (!dirty.has("settings/main")) S.settings = Object.assign({defaultLead:""}, d.exists ? d.data() : {});
+    if (!d.metadata.fromCache || d.exists) got.settings = true;
+    ready();
+  }, onErr);
+  setTimeout(() => { if (!S.ready) { S.ready = true; render(); } }, 12000);
+}
+function startLocal(why){
+  S.mode = "local"; S.localWhy = why;
+  let data = null;
+  try { data = JSON.parse(localStorage.getItem(LOCAL_KEY) || "null"); } catch(e) {}
+  loadData(data && Array.isArray(data.songs) ? data : STARTER);
+  S.ready = true;
+  render();
+}
+
+/* ---------------- edits ---------------- */
+function nudge(id, k, d){
+  const s = S.songs[id]; if (!s || isLocked(s) || S.readOnly) return;
+  const base = tplOf(s).off[k] || 0;
+  const nv = clamp(eff(s).off[k] + d);
+  const delta = Object.assign({}, s.delta);
+  if (nv - base) delta[k] = nv - base; else delete delta[k];
+  s.delta = delta; touch("songs", id);
+}
+function setFx(id, v){ const s = S.songs[id]; if (!s || isLocked(s)) return; s.fx = v || null; touch("songs", id); }
+function setStatus(id, st){
+  const s = S.songs[id]; if (!s || S.readOnly || s.status === st) return;
+  if (st === "locked") { const e = eff(s); s.frozen = {off:e.off, fx:e.fx}; }
+  else if (isLocked(s) && s.frozen) {
+    const t = tplOf(s), d = {};
+    KEYS.forEach(({k}) => { const v = (s.frozen.off[k] || 0) - (t.off[k] || 0); if (v) d[k] = v; });
+    s.delta = d; s.fx = s.frozen.fx === t.fx ? null : s.frozen.fx; s.frozen = null;
+  }
+  s.status = st; touch("songs", id);
+}
+function moveSong(id, dir){
+  const list = songsSorted(), i = list.findIndex(s => s.id === id), j = i + dir;
+  if (i < 0 || j < 0 || j >= list.length || S.readOnly) return;
+  [list[i], list[j]] = [list[j], list[i]];
+  list.forEach((s, n) => { if (s.order !== n + 1) { s.order = n + 1; touch("songs", s.id); } });
+}
+function armDelete(btn, label, fn){
+  if (btn.dataset.armed !== "1") {
+    btn.dataset.armed = "1"; btn.textContent = "Tap again to delete";
+    setTimeout(() => { if (btn.isConnected) { btn.dataset.armed = ""; btn.textContent = label; } }, 3000);
+    return;
+  }
+  fn();
+}
+function deleteSong(id){
+  if (!S.songs[id] || S.readOnly) return;
+  const title = S.songs[id].title;
+  delete S.songs[id];
+  if (S.openSong === id) { S.openSong = null; songEd = null; }
+  render(); removeDoc("songs", id);
+  toast("Deleted " + title + ".");
+}
+function nudgeTpl(id, k, d){
+  const t = S.templates[id]; if (!t || S.readOnly) return;
+  const off = Object.assign({}, t.off), nv = clamp((off[k] || 0) + d);
+  if (nv) off[k] = nv; else delete off[k];
+  t.off = off; touch("templates", id);
+}
+function newTemplate(from){
+  if (S.readOnly) return;
+  const src = from ? S.templates[from] : null;
+  const id = uid("t"), maxO = Math.max(0, ...tplsSorted().map(t => t.order || 0));
+  S.templates[id] = normTpl(src
+    ? Object.assign(clone(src), {id, order:maxO + 1, name:"Copy of " + src.name})
+    : {id, order:maxO + 1, name:"New template", blurb:"", off:{}, fx:"normal", cues:[]});
+  S.openTpl = id; tplEd = null;
+  touch("templates", id);
+  requestAnimationFrame(() => { const n = $("tpl-" + id + "-name"); if (n) { n.focus(); n.select(); } });
+}
+function deleteTemplate(id){
+  if (usedBy(id).length || S.readOnly) return;
+  const name = S.templates[id] ? S.templates[id].name : "template";
+  delete S.templates[id]; S.openTpl = null; tplEd = null;
+  render(); removeDoc("templates", id);
+  toast("Deleted " + name + ".");
+}
+function usedBy(id){ return Object.values(S.songs).filter(s => s.tpl === id); }
+
+/* ---------------- shared editor parts ---------------- */
+function stepperGrid(prefix, onNudge){
+  return h("div", {class:"steppers"}, KEYS.map(({k, lab, g}) =>
+    h("div", {class:"step", "data-k":k},
+      h("div", {class:"step-head"},
+        h("span", {class:"step-lab"}, h("i", {class:"gchip " + GCOL[g]}), lab),
+        h("span", {class:"step-t"})),
+      h("button", {type:"button", class:"step-b", "aria-label":lab + " down 1 dB", onclick:() => onNudge(k, -1)}, "−"),
+      h("output", {class:"step-v", id:prefix + k}),
+      h("button", {type:"button", class:"step-b", "aria-label":lab + " up 1 dB", onclick:() => onNudge(k, 1)}, "+"))));
+}
+function syncSteppers(grid, off, tplOff, disabled){
+  grid.querySelectorAll(".step").forEach(st => {
+    const k = st.dataset.k, v = off[k] || 0, tv = tplOff ? (tplOff[k] || 0) : 0;
+    const out = st.querySelector(".step-v");
+    out.textContent = sgn(v);
+    out.className = "step-v " + (v > 0 ? "up" : v < 0 ? "down" : "zero");
+    st.querySelector(".step-t").textContent = tv ? "tpl " + sgn(tv) : "";
+    st.classList.toggle("set", v !== 0);
+    const [dn, up] = st.querySelectorAll(".step-b");
+    dn.disabled = disabled || v <= -LIM; up.disabled = disabled || v >= LIM;
+  });
+}
+function segButtons(label, items, onPick){
+  return h("div", {class:"seg", role:"group", "aria-label":label},
+    items.map(([v, l]) => h("button", {type:"button", "data-v":v, "aria-pressed":"false", onclick:() => onPick(v)}, l)));
+}
+function syncSeg(seg, active, disabled){
+  seg.querySelectorAll("button").forEach(b => {
+    b.setAttribute("aria-pressed", String(b.dataset.v === active));
+    b.disabled = !!disabled;
+  });
+}
+function cueBlock(prefix, getList, getSong){
+  const list = h("ul", {class:"cues"});
+  const input = h("input", {type:"text", id:prefix + "cue", maxlength:"160",
+    placeholder:"Add a cue — e.g. Solo: {LEAD} solo patch", "aria-label":"New cue"});
+  const addBtn = h("button", {class:"btn", type:"submit"}, "Add");
+  const form = h("form", {class:"cue-add", onsubmit:(e) => {
+    e.preventDefault();
+    const v = input.value.trim(), arr = getList();
+    if (!v || !arr || S.readOnly) return;
+    arr.push(v); input.value = ""; form.dispatchEvent(new CustomEvent("changed"));
+  }}, input, addBtn);
+  function sync(onRemove){
+    const arr = getList() || [], s = getSong();
+    list.replaceChildren(...(arr.length
+      ? arr.map((c, i) => h("li", {class:"cue"},
+          h("span", null, s ? resolve(c, s) : c),
+          S.readOnly ? null : h("button", {type:"button", "aria-label":"Remove cue", onclick:() => { arr.splice(i, 1); onRemove(); }}, "×")))
+      : [h("li", {class:"cue empty"}, h("span", null, "No cues yet."))]));
+    input.disabled = S.readOnly; addBtn.disabled = S.readOnly;
+  }
+  return {list, form, sync};
+}
+
+/* ---------------- song editor ---------------- */
+let songEd = null;
+function buildSongEditor(id){
+  const pre = "ed-" + id + "-";
+  const song = () => S.songs[id];
+
+  const tplSel = h("select", {id:pre + "tpl", onchange:(e) => {
+    const s = song(); if (!s || isLocked(s)) return;
+    s.tpl = e.target.value; s.delta = {}; s.fx = null; touch("songs", id);
+  }});
+  const leadSel = h("select", {id:pre + "lead", onchange:(e) => {
+    const s = song(); if (!s) return; s.lead = e.target.value; touch("songs", id);
+  }});
+  const statusSeg = segButtons("Status", Object.entries(ST_LAB), (v) => setStatus(id, v));
+  const lockMsg = h("p", {class:"ed-lock", hidden:true},
+    "Locked after soundcheck — template changes can't touch it. Set it back to Rehearsed to change the mix.");
+  const steps = stepperGrid(pre + "v-", (k, d) => nudge(id, k, d));
+  const fxSeg = segButtons("Vocal reverb", [["", "Template"], ["dry", "Dry"], ["normal", "Normal"], ["wet", "Wet"]], (v) => setFx(id, v));
+  const cues = cueBlock(pre, () => song() && song().cues, song);
+  cues.form.addEventListener("changed", () => touch("songs", id));
+  const tplCues = h("ul", {class:"cues"});
+  const tplCueWrap = h("div", {class:"ed-sec"}, h("span", {class:"flab"}, "From the template"), tplCues);
+  const notes = h("textarea", {id:pre + "notes", rows:"3", placeholder:"Key, tuning, capo, count-in, who starts it…",
+    oninput:(e) => { const s = song(); if (!s) return; s.notes = e.target.value; touch("songs", id); }});
+  const upB = h("button", {type:"button", class:"btn", onclick:() => moveSong(id, -1)}, "Move up");
+  const dnB = h("button", {type:"button", class:"btn", onclick:() => moveSong(id, 1)}, "Move down");
+  const delB = h("button", {type:"button", class:"btn danger", onclick:() => armDelete(delB, "Delete song", () => deleteSong(id))}, "Delete song");
+
+  const el = h("div", {class:"ed", id:"ed-" + id},
+    h("div", {class:"ed-grid"},
+      h("div", null, h("label", {class:"flab", for:pre + "tpl"}, "Template"), tplSel,
+        h("p", {class:"hint"}, "Switching clears this song's own tweaks.")),
+      h("div", null, h("label", {class:"flab", for:pre + "lead"}, "Who solos"), leadSel),
+      h("div", null, h("span", {class:"flab"}, "Status"), statusSeg)),
+    lockMsg,
+    h("div", {class:"ed-sec"}, h("span", {class:"flab"}, "Before the count — from the tape"), steps),
+    h("div", {class:"ed-sec"}, h("span", {class:"flab"}, "Vocal reverb (EFX)"), fxSeg),
+    h("div", {class:"ed-sec"}, h("span", {class:"flab"}, "In the song"), cues.list, cues.form,
+      h("p", {class:"hint"}, "{LEAD} turns into whoever solos on this song.")),
+    tplCueWrap,
+    h("div", {class:"ed-sec"}, h("label", {class:"flab", for:pre + "notes"}, "Rehearsal notes"), notes),
+    h("div", {class:"ed-foot"}, h("div", null, upB, dnB), delB));
+
+  function sync(){
+    const s = song(); if (!s) return;
+    const t = tplOf(s), e = eff(s), L = isLocked(s) || S.readOnly;
+    fillSelect(tplSel, tplsSorted().map(x => [x.id, x.name]).concat(S.templates[s.tpl] ? [] : [[s.tpl, "(missing template)"]]), s.tpl);
+    tplSel.disabled = L;
+    fillSelect(leadSel, [["", "Default — " + (LEAD_LAB[S.settings.defaultLead] || "not set")],
+      ["gtr1", "Gtr 1 (you)"], ["gtr2", "Gtr 2"], ["both", "Both guitars"]], s.lead || "");
+    leadSel.disabled = S.readOnly;
+    syncSeg(statusSeg, s.status, S.readOnly);
+    lockMsg.hidden = !isLocked(s);
+    syncSteppers(steps, e.off, isLocked(s) ? null : t.off, L);
+    syncSeg(fxSeg, isLocked(s) ? e.fx : (s.fx || ""), L);
+    fxSeg.querySelector('[data-v=""]').textContent = "Template (" + FX_LAB[t.fx] + ")";
+    cues.sync(() => touch("songs", id));
+    tplCues.replaceChildren(...t.cues.map(c => h("li", {class:"cue tpl"}, h("span", null, resolve(c, s)))));
+    tplCueWrap.hidden = !t.cues.length;
+    if (document.activeElement !== notes && notes.value !== s.notes) notes.value = s.notes;
+    notes.disabled = S.readOnly;
+    const list = songsSorted(), i = list.findIndex(x => x.id === id);
+    upB.disabled = S.readOnly || i <= 0; dnB.disabled = S.readOnly || i >= list.length - 1; delB.disabled = S.readOnly;
+  }
+  return {id, el, sync};
+}
+
+/* ---------------- template editor ---------------- */
+let tplEd = null;
+function buildTplEditor(id){
+  const pre = "tpl-" + id + "-";
+  const tpl = () => S.templates[id];
+  const name = h("input", {type:"text", id:pre + "name", maxlength:"40",
+    oninput:(e) => { const t = tpl(); if (!t) return; t.name = e.target.value.trim() || "Untitled"; touch("templates", id); }});
+  const blurb = h("textarea", {id:pre + "blurb", rows:"2", maxlength:"240", placeholder:"What kind of song this is for",
+    oninput:(e) => { const t = tpl(); if (!t) return; t.blurb = e.target.value; touch("templates", id); }});
+  const used = h("p", {class:"hint"});
+  const steps = stepperGrid(pre + "v-", (k, d) => nudgeTpl(id, k, d));
+  const fxSeg = segButtons("Vocal reverb", [["dry", "Dry"], ["normal", "Normal"], ["wet", "Wet"]],
+    (v) => { const t = tpl(); if (!t || S.readOnly) return; t.fx = v; touch("templates", id); });
+  const cues = cueBlock(pre, () => tpl() && tpl().cues, () => null);
+  cues.form.addEventListener("changed", () => touch("templates", id));
+  const dup = h("button", {type:"button", class:"btn", onclick:() => newTemplate(id)}, "Duplicate");
+  const delB = h("button", {type:"button", class:"btn danger", onclick:() => armDelete(delB, "Delete template", () => deleteTemplate(id))}, "Delete template");
+  const done = h("button", {type:"button", class:"btn primary", onclick:() => { S.openTpl = null; render(); const c = document.querySelector('[data-tpl="' + id + '"]'); if (c) c.focus(); }}, "Done");
+
+  const el = h("div", {class:"panel tpl-ed", id:"tplEd"},
+    h("div", {class:"ed-grid"},
+      h("div", null, h("label", {class:"flab", for:pre + "name"}, "Template name"), name),
+      h("div", null, h("label", {class:"flab", for:pre + "blurb"}, "Use it for"), blurb)),
+    used,
+    h("div", {class:"ed-sec"}, h("span", {class:"flab"}, "Before the count — from the tape"), steps),
+    h("div", {class:"ed-sec"}, h("span", {class:"flab"}, "Vocal reverb (EFX)"), fxSeg),
+    h("div", {class:"ed-sec"}, h("span", {class:"flab"}, "Cues every song on this template gets"), cues.list, cues.form),
+    h("div", {class:"ed-foot"}, h("div", null, dup, delB), done));
+
+  function sync(){
+    const t = tpl(); if (!t) return;
+    if (document.activeElement !== name && name.value !== t.name) name.value = t.name;
+    if (document.activeElement !== blurb && blurb.value !== t.blurb) blurb.value = t.blurb;
+    name.disabled = blurb.disabled = S.readOnly;
+    const u = usedBy(id), lockedN = u.filter(isLocked).length;
+    used.textContent = u.length
+      ? u.length + (u.length === 1 ? " song uses" : " songs use") + " this template. Changes here reach all of them"
+        + (lockedN ? " except the " + lockedN + " locked." : ".")
+      : "No songs use this template yet.";
+    syncSteppers(steps, t.off, null, S.readOnly);
+    syncSeg(fxSeg, t.fx, S.readOnly);
+    cues.sync(() => touch("templates", id));
+    dup.disabled = S.readOnly;
+    delB.disabled = S.readOnly || u.length > 0;
+    delB.title = u.length ? "Move its songs to another template first" : "";
+  }
+  return {id, el, sync};
+}
+
+/* ---------------- render ---------------- */
+function render(){
+  renderStats(); renderStore(); renderLead(); renderTemplates(); renderSongs();
+  renderImportTpl(); renderBackup(); renderPrint();
+  if (S.gig >= 0) renderGig();
+  const n = songsSorted().length;
+  $("gigBtn").disabled = !S.ready || !n;
+  $("importBtn").disabled = !S.ready || S.readOnly;
+}
+function renderStats(){
+  const el = $("slStats");
+  if (!S.ready) { el.replaceChildren(h("span", {class:"sl-big"}, "—", h("small", null, "songs"))); return; }
+  const list = songsSorted(), total = list.reduce((a, s) => a + (s.dur || 0), 0);
+  const c = {draft:0, rehearsed:0, locked:0}; list.forEach(s => c[s.status]++);
+  el.replaceChildren(
+    h("span", {class:"sl-big"}, String(list.length), h("small", null, list.length === 1 ? "song" : "songs")),
+    h("span", {class:"sl-big"}, total ? String(Math.round(total / 60)) : "—", h("small", null, "min")),
+    h("span", {class:"sl-pills"}, ["draft", "rehearsed", "locked"].map(k =>
+      h("span", {class:"pill st-" + k}, h("i"), c[k] + " " + ST_LAB[k].toLowerCase()))));
+}
+function renderStore(){
+  const el = $("slStore"); let txt, local = false;
+  if (!S.ready) txt = "Loading setlist…";
+  else if (S.readOnly) txt = "View only";
+  else if (S.mode === "db") txt = (saving > 0 || dirty.size) ? "Saving…" : "Saved to this sheet · syncs across your devices";
+  else { local = true; txt = S.localWhy === "fallback" ? "Couldn't reach the saved setlist · changes stay on this device" : "Saved on this device"; }
+  el.textContent = txt; el.className = "sl-store" + (local ? " local" : "");
+}
+function renderLead(){
+  const d = S.settings.defaultLead || "";
+  $("leadSeg").querySelectorAll("button").forEach(b => {
+    b.setAttribute("aria-pressed", String(b.dataset.lead === d));
+    b.disabled = !S.ready || S.readOnly;
+  });
+  $("leadHint").hidden = !S.ready || !!d;
+}
+function renderTemplates(){
+  const grid = $("tplGrid");
+  if (!S.ready) { grid.replaceChildren(); $("tplEditor").replaceChildren(); return; }
+  const cards = tplsSorted().map(t => {
+    const n = usedBy(t.id).length, open = S.openTpl === t.id;
+    return h("button", {type:"button", class:"tpl-card", "data-tpl":t.id, "aria-expanded":String(open), "aria-controls":"tplEd",
+      onclick:() => { S.openTpl = open ? null : t.id; render(); if (!open) requestAnimationFrame(() => { const e = $("tplEd"); if (e) e.scrollIntoView({block:"nearest"}); }); }},
+      h("span", {class:"tpl-name"}, t.name),
+      h("span", {class:"tpl-count"}, n + (n === 1 ? " song" : " songs")),
+      movesEl(Object.fromEntries(KEYS.map(({k}) => [k, clamp(t.off[k] || 0)])), t.fx));
+  });
+  if (!S.readOnly) cards.push(h("button", {type:"button", class:"tpl-card add", onclick:() => newTemplate(null)}, "+ New template"));
+  grid.replaceChildren(...cards);
+
+  const holder = $("tplEditor");
+  if (S.openTpl && S.templates[S.openTpl]) {
+    if (!tplEd || tplEd.id !== S.openTpl) { tplEd = buildTplEditor(S.openTpl); holder.replaceChildren(tplEd.el); }
+    else if (tplEd.el.parentNode !== holder) holder.replaceChildren(tplEd.el);
+    tplEd.sync();
+  } else { S.openTpl = null; tplEd = null; holder.replaceChildren(); }
+}
+
+const rowCache = {};
+function makeRow(id){
+  const row = h("button", {type:"button", class:"song-row", "aria-controls":"ed-" + id,
+    onclick:() => {
+      S.openSong = S.openSong === id ? null : id;
+      render();
+      if (S.openSong) requestAnimationFrame(() => { const e = $("ed-" + id); if (e) e.scrollIntoView({block:"nearest"}); });
+    }});
+  const li = h("li", {class:"song", "data-id":id}, row);
+  return {li, update(i){
+    const s = S.songs[id], e = eff(s), open = S.openSong === id;
+    row.setAttribute("aria-expanded", String(open));
+    row.replaceChildren(
+      h("span", {class:"song-n"}, String(i + 1).padStart(2, "0")),
+      h("span", {class:"song-main"},
+        h("span", {class:"song-title"}, s.title),
+        s.artist ? h("span", {class:"song-artist"}, s.artist) : null,
+        movesEl(e.off, e.fx)),
+      h("span", {class:"song-side"},
+        h("span", {class:"pill st-" + s.status}, h("i"), ST_LAB[s.status]),
+        h("span", {class:"tpl-chip"}, tplOf(s).name),
+        s.dur ? h("span", {class:"song-dur"}, dur(s.dur)) : null));
+    li.classList.toggle("open", open);
+    if (open) {
+      if (!songEd || songEd.id !== id) songEd = buildSongEditor(id);
+      if (songEd.el.parentNode !== li) li.append(songEd.el);
+      songEd.sync();
+    } else {
+      li.querySelectorAll(":scope > .ed").forEach(n => n.remove());
+    }
+  }};
+}
+function renderSongs(){
+  const ol = $("songList");
+  if (!S.ready) { ol.replaceChildren(h("li", {class:"song-empty"}, "Loading setlist…")); return; }
+  const list = songsSorted();
+  if (!list.length) {
+    ol.replaceChildren(h("li", {class:"song-empty"}, "No songs yet. Use Import songs to paste your set, or restore a backup."));
+    return;
+  }
+  Object.keys(rowCache).forEach(id => { if (!S.songs[id]) delete rowCache[id]; });
+  if (S.openSong && !S.songs[S.openSong]) { S.openSong = null; songEd = null; }
+  list.forEach((s, i) => { (rowCache[s.id] || (rowCache[s.id] = makeRow(s.id))).update(i); });
+  const want = list.map(s => s.id).join("|");
+  const have = Array.from(ol.children).map(li => li.dataset.id || "").join("|");
+  if (want !== have) ol.replaceChildren(...list.map(s => rowCache[s.id].li));
+}
+
+/* ---------------- import ---------------- */
+function normKey(t){ return String(t || "").toLowerCase().replace(/[^a-z0-9]/g, ""); }
+function parseImport(text){
+  const out = []; let links = 0;
+  text.split(/\r?\n/).forEach(raw => {
+    let line = raw.replace(/ /g, " ").trim();
+    if (!line) return;
+    if (/^(https?:\/\/|spotify:)/i.test(line)) { links++; return; }
+    line = line.replace(/^\d{1,3}\s*[.):\-]\s+/, "");
+    let secs = 0;
+    const m = line.match(/(?:^|[\s\-–—|,(])(\d{1,2}):([0-5]\d)\)?\s*$/);
+    if (m) {
+      secs = Number(m[1]) * 60 + Number(m[2]);
+      line = line.slice(0, m.index).replace(/[\s\-–—|,(]+$/, "").trim();
+    }
+    const parts = (line.includes("\t") ? line.split("\t") : line.split(/\s+[—–-]\s+|\s+\|\s+/))
+      .map(p => p.trim()).filter(Boolean);
+    if (!parts.length) return;
+    out.push({title:parts[0], artist:parts[1] || "", dur:secs});
+  });
+  return {rows:out, links};
+}
+function classifyImport(rows){
+  const existing = Object.values(S.songs).map(s => ({t:normKey(s.title), a:normKey(s.artist)}));
+  const seen = [], fresh = [], dupes = [];
+  rows.forEach(r => {
+    const t = normKey(r.title), a = normKey(r.artist);
+    const clash = existing.concat(seen).some(x => x.t === t && (!a || !x.a || x.a === a));
+    if (clash) dupes.push(r); else { fresh.push(r); seen.push({t, a}); }
+  });
+  return {fresh, dupes};
+}
+function renderImportTpl(){
+  const sel = $("importTpl");
+  const opts = tplsSorted().map(t => [t.id, t.name]);
+  fillSelect(sel, opts.length ? opts : [["base", "Base mix"]], sel.value && S.templates[sel.value] ? sel.value : (S.templates.base ? "base" : (opts[0] ? opts[0][0] : "base")));
+}
+function updateImportPreview(){
+  const {rows, links} = parseImport($("importText").value);
+  const {fresh, dupes} = classifyImport(rows);
+  const bits = [];
+  if (fresh.length) bits.push(fresh.length + (fresh.length === 1 ? " new song" : " new songs"));
+  if (dupes.length) bits.push(dupes.length + " already in the set (skipped)");
+  if (links) bits.push(links + (links === 1 ? " link" : " links") + " skipped — paste song names instead");
+  $("importPreview").textContent = bits.join(" · ");
+  $("importGo").disabled = !fresh.length || S.readOnly;
+  $("importGo").textContent = fresh.length ? "Add " + fresh.length + (fresh.length === 1 ? " song" : " songs") : "Add songs";
+}
+async function doImport(){
+  const {rows} = parseImport($("importText").value);
+  const {fresh} = classifyImport(rows);
+  if (!fresh.length || S.readOnly) return;
+  const tpl = $("importTpl").value || "base";
+  let order = Math.max(0, ...songsSorted().map(s => s.order || 0));
+  const ops = fresh.map(r => {
+    const id = uid("s");
+    S.songs[id] = normSong({id, order:++order, title:r.title, artist:r.artist, dur:r.dur, tpl, status:"draft"});
+    return {key:"songs/" + id, body:bodyOf(S.songs[id])};
+  });
+  $("importText").value = ""; updateImportPreview();
+  render();
+  const ok = await bulk(ops);
+  if (ok) toast("Added " + fresh.length + (fresh.length === 1 ? " song" : " songs") + " to the end of the set.");
+}
+
+/* ---------------- backup ---------------- */
+function backupJson(){ return JSON.stringify(exportData(), null, 1); }
+function renderBackup(){
+  $("bkDownload").hidden = !S.downloads;
+  if (!$("backupPanel").hidden) {
+    const ta = $("bkText"), v = backupJson();
+    if (document.activeElement !== ta && ta.value !== v) ta.value = v;
+  }
+  $("bkRestoreGo").disabled = S.readOnly || !$("bkRestore").value.trim();
+}
+async function copyBackup(){
+  const ta = $("bkText"); ta.value = backupJson();
+  try { await navigator.clipboard.writeText(ta.value); toast("Backup copied."); }
+  catch(e) { ta.focus(); ta.select(); toast("Selected — press Ctrl+C, or long-press and Copy."); }
+}
+async function downloadBackup(){
+  if (!S.downloads) return;
+  const day = new Date().toISOString().slice(0, 10);
+  try { await S.downloads.save({filename:"setlist-backup-" + day + ".json", data:backupJson()}); }
+  catch(e) {
+    const c = e && e.code;
+    if (c === "declined") return;
+    if (c === "rate_limited") toast("A save prompt is already open.");
+    else toast("Couldn't save the file here. Use Copy backup instead.");
+  }
+}
+function parseBackup(text){
+  let d; try { d = JSON.parse(text); } catch(e) { return {err:"That isn't a backup — it should start with {\"app\":\"vgm14-gig-sheet\"."}; }
+  if (!d || !Array.isArray(d.songs) || !Array.isArray(d.templates)) return {err:"That text is missing the songs or templates a backup has."};
+  if (d.songs.some(s => !s || !s.id) || d.templates.some(t => !t || !t.id)) return {err:"Some entries in that backup have no id, so it can't be restored."};
+  return {data:d};
+}
+async function restoreBackup(){
+  const {err, data} = parseBackup($("bkRestore").value.trim());
+  if (err) { $("bkMsg").textContent = err; return; }
+  const before = {songs:Object.keys(S.songs), templates:Object.keys(S.templates)};
+  loadData(data);
+  S.openSong = null; songEd = null; S.openTpl = null; tplEd = null;
+  const ops = [];
+  before.songs.filter(id => !S.songs[id]).forEach(id => ops.push({key:"songs/" + id, body:null}));
+  before.templates.filter(id => !S.templates[id]).forEach(id => ops.push({key:"templates/" + id, body:null}));
+  Object.values(S.templates).forEach(t => ops.push({key:"templates/" + t.id, body:bodyOf(t)}));
+  Object.values(S.songs).forEach(s => ops.push({key:"songs/" + s.id, body:bodyOf(s)}));
+  ops.push({key:"settings/main", body:clone(S.settings)});
+  $("bkRestore").value = "";
+  render();
+  const ok = await bulk(ops);
+  $("bkMsg").textContent = ok ? "Restored " + data.songs.length + " songs and " + data.templates.length + " templates." : "";
+}
+
+/* ---------------- print ---------------- */
+function renderPrint(){
+  const el = $("slPrint");
+  if (!S.ready) { el.replaceChildren(); return; }
+  el.replaceChildren(h("table", null,
+    h("thead", null, h("tr", null, ["#", "Song", "Template", "Before the count", "Reverb", "In the song"].map(x => h("th", null, x)))),
+    h("tbody", null, songsSorted().map((s, i) => {
+      const e = eff(s), t = tplOf(s);
+      return h("tr", null,
+        h("td", {class:"n"}, String(i + 1)),
+        h("td", null, h("strong", null, s.title), s.artist ? [h("br"), s.artist] : null),
+        h("td", null, t.name),
+        h("td", {class:"mono"}, summaryText(s, false)),
+        h("td", {class:"mono"}, FX_LAB[e.fx]),
+        h("td", null, s.cues.concat(t.cues).map(c => resolve(c, s)).join(" · ")));
+    }))));
+}
+
+/* ---------------- gig mode ---------------- */
+let wl = null, gigReturn = null;
+async function wake(on){
+  try {
+    if (on && "wakeLock" in navigator) { if (!wl) wl = await navigator.wakeLock.request("screen"); }
+    else if (!on && wl) { await wl.release(); wl = null; }
+  } catch(e) { wl = null; }
+}
+function openGig(){
+  const list = songsSorted(); if (!list.length) return;
+  let id = null; try { id = localStorage.getItem(GIG_KEY); } catch(e) {}
+  const i = list.findIndex(s => s.id === id);
+  S.gig = i >= 0 ? i : 0;
+  gigReturn = document.activeElement;
+  $("gig").hidden = false;
+  document.documentElement.classList.add("gig-open");
+  renderGig();
+  $("gigNext").focus();
+  wake(true);
+}
+function closeGig(){
+  S.gig = -1; $("gig").hidden = true;
+  document.documentElement.classList.remove("gig-open");
+  wake(false);
+  if (gigReturn && gigReturn.focus) gigReturn.focus();
+}
+function stepGig(d){
+  const n = songsSorted().length, j = S.gig + d;
+  if (j < 0 || j >= n) return;
+  S.gig = j; renderGig(); $("gigBody").scrollTop = 0;
+}
+function renderGig(){
+  const list = songsSorted();
+  if (!list.length) { closeGig(); return; }
+  if (S.gig >= list.length) S.gig = list.length - 1;
+  const s = list[S.gig], e = eff(s), t = tplOf(s), next = list[S.gig + 1];
+  try { localStorage.setItem(GIG_KEY, s.id); } catch(err) {}
+  $("gigPos").textContent = "Song " + (S.gig + 1) + " of " + list.length;
+  $("gigStatus").replaceChildren(h("span", {class:"pill st-" + s.status}, h("i"), ST_LAB[s.status]));
+  const moves = KEYS.filter(({k}) => e.off[k]).map(({k, lab, g}) =>
+    h("span", {class:"gmv"}, h("i", {class:"gchip " + GCOL[g]}), lab + " " + sgn(e.off[k])));
+  const cues = s.cues.map(c => h("li", null, resolve(c, s))).concat(t.cues.map(c => h("li", {class:"tpl"}, resolve(c, s))));
+  $("gigBody").replaceChildren(...[
+    h("h2", {class:"gig-title", id:"gigTitle"}, s.title),
+    h("p", {class:"gig-artist"}, [s.artist, s.dur ? dur(s.dur) : ""].filter(Boolean).join(" · ") || " "),
+    h("p", {class:"gig-lab"}, "Before the count — from the tape"),
+    moves.length ? h("div", {class:"gig-moves"}, moves) : h("p", {class:"gig-none"}, "No moves. Faders on the tape."),
+    h("p", {class:"gig-fx"}, "Vocal reverb " + FX_LAB[e.fx].toLowerCase() + " · EFX " + FX_KNOB[e.fx]),
+    cues.length ? [h("p", {class:"gig-lab"}, "In the song"), h("ul", {class:"gig-cues"}, cues)] : null,
+    s.notes ? h("p", {class:"gig-notes"}, s.notes) : null,
+    h("div", {class:"gig-next"}, next
+      ? [h("span", {class:"gig-lab"}, "Next up"), h("b", null, next.title), " — " + summaryText(next)]
+      : "Last song. Master down when the applause dies, speakers off first.")
+  ].flat().filter(Boolean));
+  $("gigPrev").disabled = S.gig === 0;
+  $("gigNext").disabled = !next;
+}
+
+/* ---------------- toast ---------------- */
+let toastT = null;
+function toast(msg){
+  const t = $("slToast"); t.textContent = msg; t.hidden = false;
+  clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 3400);
+}
+
+/* ---------------- wiring ---------------- */
+function togglePanel(btnId, panelId, onOpen){
+  $(btnId).addEventListener("click", () => {
+    const opening = $(panelId).hidden;
+    [["importBtn", "importPanel"], ["backupBtn", "backupPanel"]].forEach(([b, p]) => {
+      $(p).hidden = true; $(b).setAttribute("aria-expanded", "false");
+    });
+    if (opening) { $(panelId).hidden = false; $(btnId).setAttribute("aria-expanded", "true"); if (onOpen) onOpen(); }
+  });
+}
+togglePanel("importBtn", "importPanel", () => { renderImportTpl(); updateImportPreview(); $("importText").focus(); });
+togglePanel("backupBtn", "backupPanel", () => { $("bkMsg").textContent = ""; renderBackup(); });
+$("importText").addEventListener("input", updateImportPreview);
+$("importGo").addEventListener("click", doImport);
+$("bkCopy").addEventListener("click", copyBackup);
+$("bkDownload").addEventListener("click", downloadBackup);
+$("bkRestore").addEventListener("input", () => { $("bkMsg").textContent = ""; renderBackup(); });
+$("bkRestoreGo").addEventListener("click", () => armDelete($("bkRestoreGo"), "Replace setlist with this backup", restoreBackup));
+$("leadSeg").querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+  if (S.readOnly || !S.ready) return;
+  S.settings = Object.assign({}, S.settings, {defaultLead: S.settings.defaultLead === b.dataset.lead ? "" : b.dataset.lead});
+  touch("settings");
+}));
+$("gigBtn").addEventListener("click", openGig);
+$("gigClose").addEventListener("click", closeGig);
+$("gigPrev").addEventListener("click", () => stepGig(-1));
+$("gigNext").addEventListener("click", () => stepGig(1));
+document.addEventListener("keydown", (e) => {
+  if (S.gig < 0) return;
+  if (e.key === "Escape") { e.preventDefault(); closeGig(); }
+  else if (e.key === "ArrowRight") stepGig(1);
+  else if (e.key === "ArrowLeft") stepGig(-1);
+  else if (e.key === "Tab") {
+    const f = [$("gigClose"), $("gigPrev"), $("gigNext")].filter(b => !b.disabled);
+    const i = f.indexOf(document.activeElement);
+    e.preventDefault();
+    f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+  }
+});
+(function swipe(){
+  let x0 = null, y0 = null;
+  const g = $("gig");
+  g.addEventListener("touchstart", (e) => { x0 = e.changedTouches[0].clientX; y0 = e.changedTouches[0].clientY; }, {passive:true});
+  g.addEventListener("touchend", (e) => {
+    if (x0 == null) return;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) stepGig(dx < 0 ? 1 : -1);
+    x0 = y0 = null;
+  }, {passive:true});
+})();
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && S.gig >= 0) { wl = null; wake(true); } });
+
+/* ---------------- boot ---------------- */
+render();
+const hasClaude = !!(window.claude && typeof window.claude.use === "function");
+(async () => {
+  let db = null;
+  if (hasClaude) { try { db = await window.claude.use("db"); } catch(e) { db = null; } }
+  if (db) startDb(db); else startLocal(hasClaude ? "fallback" : "offline");
+})();
+(async () => {
+  if (!hasClaude) return;
+  try { S.downloads = await window.claude.use("downloads"); } catch(e) { S.downloads = null; }
+  renderBackup();
+})();
+
+})();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){ /* offline-only feature; ignore */ });
+  });
+}
+</script>
+</body>
+</html>
